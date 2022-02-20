@@ -2,10 +2,12 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, GeoJSON} from 'react-leaflet';
 import L from 'leaflet';
+import state_boundries from './data/state_boundaries.json';
 
 function App() {
+
   return (
     <MapContainer 
         center={[37, -95]} 
@@ -14,9 +16,10 @@ function App() {
         minZoom={4}
         zoomSnap={.5}
         >
-      <TileLayer
+          <GeoJSON data={state_boundries.features.}/>
+      {/* <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+      /> */}
     </MapContainer>
   );
 }
