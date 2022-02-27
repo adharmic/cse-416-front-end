@@ -1,15 +1,15 @@
 
-const DISTRICTING_STATES = ["0400000US32", "0400000US12"]
+const DISTRICTING_STATES = ["12", "32"]
 
 const states = state_data.features.filter(function (entry) {
-    return DISTRICTING_STATES.includes(entry.properties.GEO_ID);
+    return DISTRICTING_STATES.includes(entry.properties.STATE);
 });
 
 var map = L.map('map', {
     minZoom: 4,
     maxZoom: 10,
     zoom: 4.5,
-    maxBounds: L.latLngBounds(L.latLng(24.5, -124.7), L.latLng(49.4, -67)),
+    maxBounds: L.latLngBounds(L.latLng(10, -124.7), L.latLng(49.4, -67)),
     zoomSnap: .5
 });
 
@@ -21,12 +21,22 @@ var positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/
 
 var state_layers = [];
 
+var district_layers = [];
+
 DISTRICTING_STATES.forEach(element => {
     state_layers.push(
         L.geoJSON(states, {
-            style: style,
+            style: {
+                fillColor: '#800026',
+                weight: 2,
+                opacity: 1,
+                color: 'white',
+                dashArray: '3',
+                fillOpacity: 0.7,
+                className: element
+            },
             filter: function (feature) {
-                return (feature.properties.GEO_ID === element);
+                return (feature.properties.STATE === element);
             }
         })
     )
