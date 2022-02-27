@@ -1,5 +1,32 @@
 var zoomed = false;
 
+function resetMap() {
+    map.setMinZoom(4);
+    map.setMaxZoom(10);
+    map.setZoom(4.5);
+    map.setMaxBounds(L.latLngBounds(L.latLng(10, -124.7), L.latLng(49.4, -67)));
+    map.eachLayer(function (layer) {
+        map.removeLayer(layer);
+    });
+    positron.addTo(map);
+    reAddStates();
+    resetStates();
+
+}
+
+function reAddStates() {
+    state_layers.forEach(element => {
+        element.addTo(map);
+    });
+}
+
+function resetStates() {
+    zoomed = false;
+    state_layers.forEach(element => {
+        makeVis(element);
+    });
+}
+
 function highlightFeature(e) {
     if (!zoomed) {
         var layer = e.target;
@@ -21,11 +48,9 @@ function showDistricts(id) {
     // L.geoJSON(districts).addTo(map);
     var gump = L.geoJSON(districts, {
         filter: function (feature) {
-            console.log(feature.properties.STATE);
             return (feature.properties.STATE === id);
         }
     }).addTo(map);
-    console.log(id);
 }
 
 function resetHighlight(e) {
@@ -58,16 +83,12 @@ function zoomToFeature(e) {
     zoomed = true;
     map.setMinZoom(6.5);
     map.fitBounds(e.target.getBounds());
-    console.log(e.target);
-    console.log(e.target.options.style.className);
     // map.setMinZoom(map.getZoom());
     state_layers.forEach(element => {
         // element.setOpacity(.5);
         makeInvis(element);
-        console.log(element);
     });
     showDistricts(e.target.options.style.className);
-    console.log(e.target.getBounds());
     map.setMaxBounds(e.target.getBounds().pad(.5));
 }
 
@@ -75,6 +96,17 @@ function makeInvis(layer) {
     layer.setStyle({
         opacity: 0,
         fillOpacity: 0
+    })
+}
+
+function makeVis(layer) {
+    layer.setStyle({
+        fillColor: '#800026',
+        weight: 2,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7
     })
 }
 
