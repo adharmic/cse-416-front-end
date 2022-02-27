@@ -23,24 +23,7 @@ var state_layers = [];
 
 var district_layers = [];
 
-DISTRICTING_STATES.forEach(element => {
-    state_layers.push(
-        L.geoJSON(states, {
-            style: {
-                fillColor: '#800026',
-                weight: 2,
-                opacity: 1,
-                color: 'white',
-                dashArray: '3',
-                fillOpacity: 0.7,
-                className: element
-            },
-            filter: function (feature) {
-                return (feature.properties.STATE === element);
-            }
-        })
-    )
-});
+loadStates();
 
 console.log(state_layers);
 

@@ -33,6 +33,27 @@ function resetHighlight(e) {
         e.target.setStyle(style);
 }
 
+function loadStates() {
+    DISTRICTING_STATES.forEach(element => {
+        state_layers.push(
+            L.geoJSON(states, {
+                style: {
+                    fillColor: '#800026',
+                    weight: 2,
+                    opacity: 1,
+                    color: 'white',
+                    dashArray: '3',
+                    fillOpacity: 0.7,
+                    className: element
+                },
+                filter: function (feature) {
+                    return (feature.properties.STATE === element);
+                }
+            })
+        )
+    });
+}
+
 function zoomToFeature(e) {
     zoomed = true;
     map.setMinZoom(6.5);
@@ -46,6 +67,8 @@ function zoomToFeature(e) {
         console.log(element);
     });
     showDistricts(e.target.options.style.className);
+    console.log(e.target.getBounds());
+    map.setMaxBounds(e.target.getBounds().pad(.5));
 }
 
 function makeInvis(layer) {
