@@ -93,7 +93,7 @@ function zoomToFeature(e) {
         makeInvis(element);
     });
     showDistricts(e.target.options.style.className);
-    map.setMaxBounds(e.target.getBounds().pad(.5));
+    map.setMaxBounds(e.target.getBounds().pad(2));
 }
 
 function makeInvis(layer) {
