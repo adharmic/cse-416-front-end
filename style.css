@@ -8,8 +8,35 @@ body {
     margin: 0;
 }
 
+table {
+    table-layout: fixed;
+    text-align: center;
+    margin: auto;
+}
+
+td {
+    text-align: center;
+    vertical-align: middle;
+}
+td img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+.selector {
+    display: block;
+    position: fixed;
+    background: #343a3f;
+    top: 10%;
+    right: 5%;
+    width: 250px;
+    height: 40%;
+    z-index: 10000;
+    text-align: center;
+}
+
 .header {
-    /* z-index: 400; */
     padding: 10px 16px;
     background: #555;
     color: #f1f1f1;

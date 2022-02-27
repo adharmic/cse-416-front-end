@@ -1,6 +1,8 @@
 var zoomed = false;
 
 function resetMap() {
+    var selector = document.getElementsByClassName("selector");
+    selector[0].style.display = "none";
     map.setMinZoom(4);
     map.setMaxZoom(10);
     map.setZoom(4.5);
@@ -80,6 +82,8 @@ function loadStates() {
 }
 
 function zoomToFeature(e) {
+    var selector = document.getElementsByClassName("selector");
+    selector[0].style.display = "block";
     zoomed = true;
     map.setMinZoom(6.5);
     map.fitBounds(e.target.getBounds());

@@ -1,5 +1,9 @@
 
-const DISTRICTING_STATES = ["12", "32"]
+
+var selector = document.getElementsByClassName("selector");
+selector[0].style.display = "none";
+
+const DISTRICTING_STATES = ["32", "22"]
 
 const states = state_data.features.filter(function (entry) {
     return DISTRICTING_STATES.includes(entry.properties.STATE);
