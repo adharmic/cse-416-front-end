@@ -73,7 +73,7 @@ td img{
     right: 0;
     width: 25%;
     height: 100%;
-    z-index: 10000;
+    z-index: 1000;
     text-align: center;
 }
 
