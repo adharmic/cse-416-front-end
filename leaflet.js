@@ -1,8 +1,8 @@
 
-const DISTRICTING_STATES = ["Nevada", "Florida"]
+const DISTRICTING_STATES = ["0400000US32", "0400000US12"]
 
 const states = state_data.features.filter(function (entry) {
-    return DISTRICTING_STATES.includes(entry.properties.NAME);
+    return DISTRICTING_STATES.includes(entry.properties.GEO_ID);
 });
 
 var map = L.map('map', {
@@ -19,8 +19,25 @@ var positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/
     attribution: cartodbAttribution
 }).addTo(map);
 
-L.geoJSON(states).addTo(map);
+var state_layers = [];
 
+DISTRICTING_STATES.forEach(element => {
+    state_layers.push(
+        L.geoJSON(states, {
+            style: style,
+            filter: function (feature) {
+                return (feature.properties.GEO_ID === element);
+            }
+        })
+    )
+});
 
+console.log(state_layers);
+
+state_layers.forEach(element => {
+    element.on('mouseover', highlightFeature).on('mouseout', resetHighlight).on('click', zoomToFeature).addTo(map);
+});
+
+// L.geoJSON(states).on('mouseover', highlightFeature).addTo(map);
 
 map.setView([0, 0], 0);
