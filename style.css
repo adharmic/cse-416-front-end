@@ -162,3 +162,7 @@ html, body, #map{
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+#Paris {
+  overflow-y: auto;
+}
