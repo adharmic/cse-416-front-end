@@ -16,6 +16,7 @@ var map = L.map('map', {
     maxBounds: L.latLngBounds(L.latLng(10, -124.7), L.latLng(49.4, -67)),
     zoomSnap: .5
 });
+map.removeControl(map.zoomControl);
 
 var cartodbAttribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution">CARTO</a>';
 

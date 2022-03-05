@@ -86,14 +86,18 @@ function zoomToFeature(e) {
     selector[0].style.display = "block";
     zoomed = true;
     map.setMinZoom(6.5);
-    map.fitBounds(e.target.getBounds());
+    map.fitBounds(e.target.getBounds().pad(.5));
     // map.setMinZoom(map.getZoom());
     state_layers.forEach(element => {
         // element.setOpacity(.5);
         makeInvis(element);
     });
     showDistricts(e.target.options.style.className);
-    map.setMaxBounds(e.target.getBounds().pad(2));
+    var bounds = e.target.getBounds().pad(.2);
+    bounds.extend(L.latLng([bounds.getSouthEast().lat, bounds.getSouthEast().lng + 7]));
+    console.log(bounds);
+    // bounds.include(L.latLng([bounds.getSouthWest().lat, bounds.getSouthWest().lon]));
+    map.setMaxBounds(bounds);
 }
 
 function makeInvis(layer) {
