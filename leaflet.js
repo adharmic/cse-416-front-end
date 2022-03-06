@@ -3,6 +3,9 @@
 var selector = document.getElementsByClassName("selector");
 selector[0].style.display = "none";
 
+var picker = document.getElementById("plans-picker")
+picker.style.display = "none";
+
 const DISTRICTING_STATES = ["32", "22"]
 
 const states = state_data.features.filter(function (entry) {

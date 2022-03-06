@@ -31,6 +31,13 @@ td img{
     border-left: 1px solid #ddd;
     background-color: #555;
   }
+
+  .tab-left {
+    overflow: hidden;
+    border-bottom: 1px solid #ddd;
+    background-color: #555;
+    color: #f1f1f1;
+  }
   
   /* Style the buttons that are used to open the tab content */
   .tab button {
@@ -69,6 +76,19 @@ td img{
     border-right: none;
     height: 100%;
     color: black;
+  }
+
+  #plans-picker {
+    text-align: center;
+    display: block;
+    position: fixed;
+    background: #ddd;
+    color: black;
+    top: 55px;
+    left: 0;
+    width: 20%;
+    height: 100%;
+    z-index: 1000;
   }
   
 .selector {

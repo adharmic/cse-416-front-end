@@ -3,6 +3,8 @@ var zoomed = false;
 function resetMap() {
     var selector = document.getElementsByClassName("selector");
     selector[0].style.display = "none";
+    var picker = document.getElementById("plans-picker")
+    picker.style.display = "none";
     map.setMinZoom(4);
     map.setMaxZoom(10);
     map.setZoom(4.5);
@@ -84,6 +86,8 @@ function loadStates() {
 function zoomToFeature(e) {
     var selector = document.getElementsByClassName("selector");
     selector[0].style.display = "block";
+    var picker = document.getElementById("plans-picker")
+    picker.style.display = "block";
     zoomed = true;
     map.setMinZoom(6.5);
     map.fitBounds(e.target.getBounds().pad(.5));
@@ -93,9 +97,9 @@ function zoomToFeature(e) {
         makeInvis(element);
     });
     showDistricts(e.target.options.style.className);
-    var bounds = e.target.getBounds().pad(.2);
-    bounds.extend(L.latLng([bounds.getSouthEast().lat, bounds.getSouthEast().lng + 7]));
-    console.log(bounds);
+    var bounds = e.target.getBounds().pad(.5);
+    bounds.extend(L.latLng([bounds.getSouthEast().lat, bounds.getSouthEast().lng + 2.25]));
+    // console.log(bounds);
     // bounds.include(L.latLng([bounds.getSouthWest().lat, bounds.getSouthWest().lon]));
     map.setMaxBounds(bounds);
 }

@@ -46,32 +46,35 @@
         </div>
     </nav>
 
+    <div id="plans-picker">
+        <div class="tab-left">
+            <h1>Available Plans</h1>
+        </div>
+        <div class="measure-form">
+            <label class="container">Democratic Plan
+                <input type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+            <label class="container">Republican Plan
+                <input type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+            <label class="container">Plan 3
+                <input type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+            <label class="container">Plan 4
+                <input type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+    </div>
+
     <div class="selector">
         <div class="tab">
-            <button class="tablinks" onclick="openCity(event, 'London')">Plans</button>
+            <button class="tablinks" id="defaultOpen" onclick="openCity(event, 'Tokyo')">Data</button>
             <button class="tablinks" onclick="openCity(event, 'Paris')">Fairness</button>
-            <button class="tablinks" onclick="openCity(event, 'Tokyo')">Data</button>
             <button class="tablinks" onclick="openCity(event, 'Rome')">Compare</button>
-        </div>
-        <div id="London" class="tabcontent">
-            <div class="measure-form">
-                <label class="container">Democratic Plan
-                    <input type="checkbox" checked="checked">
-                    <span class="checkmark"></span>
-                </label>
-                <label class="container">Republican Plan
-                    <input type="checkbox" checked="checked">
-                    <span class="checkmark"></span>
-                </label>
-                <label class="container">Plan 3
-                    <input type="checkbox" checked="checked">
-                    <span class="checkmark"></span>
-                </label>
-                <label class="container">Plan 4
-                    <input type="checkbox" checked="checked">
-                    <span class="checkmark"></span>
-                </label>
-            </div>
         </div>
         <div id="Paris" class="tabcontent">
             <div>
@@ -82,8 +85,36 @@
             </div>
         </div>
         <div id="Tokyo" class="tabcontent">
-            <!-- <h3>Data</h3>
-            <p>London is the capital city of England.</p> -->
+            <table class="table table-striped table-dark">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                </tbody>
+              </table>
         </div>
         <div id="Rome" class="tabcontent">
             <h3>Compare</h3>
