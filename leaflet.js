@@ -33,8 +33,6 @@ var district_layers = [];
 
 loadStates();
 
-console.log(state_layers);
-
 state_layers.forEach(element => {
     element.on('mouseover', highlightFeature).on('mouseout', resetHighlight).on('click', zoomToFeature).addTo(map);
 });

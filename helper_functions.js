@@ -1,6 +1,9 @@
 var zoomed = false;
 
 function resetMap() {
+    $(function () {
+        $('#table').bootstrapTable('destroy');
+    });
     var selector = document.getElementsByClassName("selector");
     selector[0].style.display = "none";
     var picker = document.getElementById("plans-picker")
@@ -84,6 +87,37 @@ function loadStates() {
 }
 
 function zoomToFeature(e) {
+    // DETERMINES WHICH DATA TO GET
+    if(e.target.options.style.className === "32") {
+        $.get( "http://localhost:8080/messages/1", function( data ) {
+            $( ".result" ).html( data );
+            $(function () {
+                $('#table').bootstrapTable({
+                    data: [data]
+                });
+            });
+          });
+    }
+    else if(e.target.options.style.className === "22") {
+        $.get( "http://localhost:8080/messages/2", function( data ) {
+            $( ".result" ).html( data );
+            $(function () {
+                $('#table').bootstrapTable({
+                    data: [data]
+                });
+            });
+          });
+    }
+    else {
+        $.get( "http://localhost:8080/messages/3", function( data ) {
+            $( ".result" ).html( data );
+            $(function () {
+                $('#table').bootstrapTable({
+                    data: data
+                });
+            });
+          });
+    }
     var selector = document.getElementsByClassName("selector");
     selector[0].style.display = "block";
     var picker = document.getElementById("plans-picker")
