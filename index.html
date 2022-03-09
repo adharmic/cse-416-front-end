@@ -17,7 +17,10 @@
         crossorigin="" />
 
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -32,6 +35,7 @@
             <a class="navbar-brand" href="#">
                 Sparks</a>
             <button type="button" onClick="resetMap()" class="btn btn-primary mr-1">Reload</button>
+                <button type="button" class="btn btn-primary mr-1"><i class="fa fa-camera"></i> Save Screenshot</button>
             <div id="boundry-picker" class="dropleft ml-auto">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -49,27 +53,50 @@
     </nav>
 
     <div id="plans-picker">
-        <div class="tab-left">
-            <h1>Available Plans</h1>
-        </div>
-        <div class="measure-form">
-            <label class="container">Democratic Plan
-                <input type="checkbox">
-                <span class="checkmark"></span>
-            </label>
-            <label class="container">Republican Plan
-                <input type="checkbox">
-                <span class="checkmark"></span>
-            </label>
-            <label class="container">Plan 3
-                <input type="checkbox">
-                <span class="checkmark"></span>
-            </label>
-            <label class="container">Plan 4
-                <input type="checkbox">
-                <span class="checkmark"></span>
-            </label>
-        </div>
+            <div class="tab tab-left">
+                <button class="tablinks1" id="defaultPlantabOpen" onclick="openPlantab(event, 'Available')">Available Plans</button>
+                <button class="tablinks1" onclick="openPlantab(event, 'Generated')">Generated Plans</button>
+            </div>
+            <div id="Available" class="tabcontent1">
+                <div class="measure-form">
+                    <label class="container">Democratic Plan
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container">Republican Plan
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container">Plan 3
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container">Plan 4
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+            <div id="Generated" class="tabcontent1">
+                <div class="measure-form">
+                    <label class="container">Gen Plan 1
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container">Gen Plan 2
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container">Gen Plan 3
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container">Gen Plan 4
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
     </div>
 
     <div class="selector">
@@ -118,11 +145,11 @@
                     </tr>
                     <tr>
                         <td>2</td>
-                        <td>.86</td>
+                        <td>.82</td>
                     </tr>
                     <tr>
                         <td>3</td>
-                        <td>.66</td>
+                        <td>.60</td>
                     </tr>
                     <tr>
                         <td>4</td>

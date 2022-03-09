@@ -34,7 +34,6 @@ td img{
 .tab {
     overflow: hidden;
     border-bottom: 1px solid #ddd;
-    border-left: 1px solid #ddd;
     background-color: #555;
   }
 
@@ -74,7 +73,7 @@ td img{
   }
   
   /* Style the tab content */
-  .tabcontent {
+  .tabcontent, .tabcontent1 {
     display: none;
     padding: 6px 12px;
     border: 1px solid #ddd;
