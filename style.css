@@ -24,6 +24,12 @@ td img{
     margin-right: auto;
 
 }
+
+#Rome {
+    text-align: center;
+    overflow: auto;
+}
+
 /* Style the tab */
 .tab {
     overflow: hidden;

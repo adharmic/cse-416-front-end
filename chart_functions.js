@@ -39,11 +39,11 @@ var marksCanvas = document.getElementById("marksChart");
 var marksData = {
   labels: ["English", "Maths", "Physics", "Chemistry", "Biology", "History"],
   datasets: [{
-    label: "Student A",
+    label: "Plan A",
     backgroundColor: "rgba(200,0,0,0.2)",
     data: [65, 75, 70, 80, 60, 80]
   }, {
-    label: "Student B",
+    label: "Plan B",
     backgroundColor: "rgba(0,0,200,0.2)",
     data: [54, 65, 60, 70, 70, 75]
   }]
@@ -51,5 +51,12 @@ var marksData = {
 
 var radarChart = new Chart(marksCanvas, {
   type: 'radar',
+  data: marksData
+});
+
+var popequal = document.getElementById("popequal");
+
+var popChar = new Chart(popequal, {
+  type: 'line',
   data: marksData
 });
