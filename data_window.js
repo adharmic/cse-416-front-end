@@ -26,6 +26,14 @@ function openCity(evt, cityName) {
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";
   }
+
+function editBoundary(bnum) {
+  bcontent = document.getElementsByClassName("dropdown-item");
+  for (let i = 0; i < bcontent.length; i++) {
+    bcontent[i].className = bcontent[i].className.replace(" active", "");
+  }
+  bcontent[bnum].className += " active";
+}
   
 document.getElementById("defaultOpen").click();
 document.getElementById("defaultPlantabOpen").click();
