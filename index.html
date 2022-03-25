@@ -17,10 +17,10 @@
         crossorigin="" />
 
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.plot.ly/plotly-2.9.0.min.js"></script>
 </head>
 
 <body>
@@ -35,7 +35,20 @@
             <a class="navbar-brand" href="#">
                 Sparks</a>
             <button type="button" onClick="resetMap()" class="btn btn-primary mr-1">Reload</button>
-                <button type="button" class="btn btn-primary mr-1"><i class="fa fa-camera"></i> Save Screenshot</button>
+            <button type="button" class="btn btn-primary mr-1"><i class="fa fa-camera"></i> Save Screenshot</button>
+
+
+            <div id="boundry-picker" class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Select State
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a onclick="editBoundary(0)" class="dropdown-item" href="#">Illinois</a>
+                    <a onclick="editBoundary(1)" class="dropdown-item" href="#">Louisiana</a>
+                    <a onclick="editBoundary(2)" class="dropdown-item" href="#">Nevada</a>
+                </div>
+            </div>
             <div id="boundry-picker" class="dropleft ml-auto">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -43,7 +56,8 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a onclick="editBoundary(0)" class="dropdown-item" href="#">Precincts</a>
-                    <a onclick="editBoundary(1)" class="dropdown-item active" href="#">Existing Congressional Districts</a>
+                    <a onclick="editBoundary(1)" class="dropdown-item active" href="#">Existing Congressional
+                        Districts</a>
                     <a onclick="editBoundary(2)" class="dropdown-item" href="#">Cities/Counties</a>
                     <a onclick="editBoundary(3)" class="dropdown-item" href="#">Census Blocks</a>
                 </div>
@@ -53,62 +67,96 @@
     </nav>
 
     <div id="plans-picker">
-            <div class="tab tab-left">
-                <button class="tablinks1" id="defaultPlantabOpen" onclick="openPlantab(event, 'Available')">Available Plans</button>
-                <button class="tablinks1" onclick="openPlantab(event, 'Generated')">Generated Plans</button>
+        <div class="tab tab-left">
+            <button class="tablinks1" id="defaultPlantabOpen" onclick="openPlantab(event, 'Available')">Available
+                Plans</button>
+            <!-- <button class="tablinks1" onclick="openPlantab(event, 'Generated')">Generated Plans</button> -->
+        </div>
+        <div id="Available" class="tabcontent1">
+            <div class="measure-form">
+                <label class="container">Enacted
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">State Senate Proposed
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">State Assembly Proposed
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Selected Seawulf
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
             </div>
-            <div id="Available" class="tabcontent1">
-                <div class="measure-form">
-                    <label class="container">Democratic Plan
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container">Republican Plan
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container">Plan 3
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container">Plan 4
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
+            <button onclick="toggleBoxplot()" type="button" id="showBox" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+                Toggle Box/Whisker
+            </button>
+
+            <div id="boxplot" class="invisible"></div>
+        </div>
+        <!-- <div id="Generated" class="tabcontent1">
+            <div class="measure-form">
+                <label class="container">Gen Plan 1
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Gen Plan 2
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Gen Plan 3
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Gen Plan 4
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
             </div>
-            <div id="Generated" class="tabcontent1">
-                <div class="measure-form">
-                    <label class="container">Gen Plan 1
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container">Gen Plan 2
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container">Gen Plan 3
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container">Gen Plan 4
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-            </div>
+
+
+        </div> -->
+
     </div>
 
     <div class="selector">
         <div class="tab">
-            <button class="tablinks" id="defaultOpen" onclick="openCity(event, 'Tokyo')">Data</button>
-            <button class="tablinks" onclick="openCity(event, 'Paris')">Fairness</button>
-            <button class="tablinks" onclick="openCity(event, 'Rome')">Compare</button>
+            <button class="tablinks" id="defaultOpen" onclick="openCity(event, 'Tokyo')">Plan Summary</button>
+            <button class="tablinks" onclick="openCity(event, 'Paris')">Compare Plans</button>
+            <button class="tablinks" onclick="openCity(event, 'Rome')">Seats-Votes</button>
+            <button class="tablinks" onclick="openCity(event, 'SWulf')">Seawulf Data</button>
         </div>
         <div id="Paris" class="tabcontent">
-            <div>
-                <canvas id="myChart"></canvas>
-            </div>
+            <table id="table" class="table table-striped table-dark">
+                <thead>
+                    <tr>
+                        <th data-field="id" scope="col">Plan Name</th>
+                        <th data-field="name" scope="col">Majority-minority districts</th>
+                        <th data-field="message" scope="col">Equality (%)</th>
+                        <th data-field="timesAccessed" scope="col">Polsby-Popper Value</th>
+                        <th data-field="timesAccessed" scope="col">R/D Split</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Enacted</th>
+                        <td>3</td>
+                        <td>53</td>
+                        <td>.74</td>
+                        <td>2:2</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Senate Proposed</th>
+                        <td>2</td>
+                        <td>39</td>
+                        <td>.60</td>
+                        <td>1:3</td>
+                    </tr>
+                </tbody>
+            </table>
             <div>
                 <canvas id="marksChart"></canvas>
             </div>
@@ -116,47 +164,21 @@
         <div id="Tokyo" class="tabcontent">
             <table id="table" class="table table-striped table-dark">
                 <thead>
-                  <tr>
-                    <th data-field="id" scope="col">ID</th>
-                    <th data-field="name" scope="col">Name</th>
-                    <th data-field="message" scope="col">Message</th>
-                    <th data-field="timesAccessed" scope="col">Times Accessed</th>
-                  </tr>
+                    <tr>
+                        <th data-field="id" scope="col">Plan Name</th>
+                        <th data-field="name" scope="col">Majority-minority districts</th>
+                        <th data-field="message" scope="col">Equality Statistics</th>
+                        <th data-field="timesAccessed" scope="col">Polsby-Popper Value</th>
+                        <th data-field="timesAccessed" scope="col">R/D Split</th>
+                    </tr>
                 </thead>
-              </table>
+            </table>
         </div>
         <div id="Rome" class="tabcontent">
-            <h1>Population Equality</h1>
+            <p>Partisan Bias</p>
             <div>
                 <canvas id="popequal"></canvas>
             </div>
-            <h1>Compactness</h1>
-            <table id="table" class="table table-striped table-dark">
-                <thead>
-                  <tr>
-                    <th data-field="id" scope="col">CD</th>
-                    <th data-field="name" scope="col">Popper Score</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>.46</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>.82</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>.60</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>.13</td>
-                    </tr>
-                </tbody>
-              </table>
         </div>
     </div>
     <div id="map"></div>

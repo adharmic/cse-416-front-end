@@ -86,6 +86,19 @@ function loadStates() {
     });
 }
 
+function toggleBoxplot() {
+    bplot = document.getElementById("boxplot");
+    console.log(bplot);
+    if(bplot.classList.contains("visible")) {
+        bplot.classList.remove("visible");
+        bplot.classList.add("invisible");
+    }
+    else {
+        bplot.classList.add("visible");
+        bplot.classList.remove("invisible");
+    }
+}
+
 function zoomToFeature(e) {
     // DETERMINES WHICH DATA TO GET
     if(e.target.options.style.className === "32") {

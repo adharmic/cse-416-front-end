@@ -37,26 +37,63 @@ const myChart = new Chart(ctx, {
 var marksCanvas = document.getElementById("marksChart");
 
 var marksData = {
-  labels: ["English", "Maths", "Physics", "Chemistry", "Biology", "History"],
+  labels: ["0%", "20%", "40%", "60%", "80%", "100%"],
   datasets: [{
-    label: "Plan A",
+    label: "Republican",
     backgroundColor: "rgba(200,0,0,0.2)",
-    data: [65, 75, 70, 80, 60, 80]
+    data: [0, 20, 85, 90, 95, 100],
+    lineTension: .4
   }, {
-    label: "Plan B",
+    label: "Democrat",
     backgroundColor: "rgba(0,0,200,0.2)",
-    data: [54, 65, 60, 70, 70, 75]
+    data: [0, 5, 10, 20, 80, 100],
+    lineTension: .5
   }]
 };
 
+var compareData = {
+  labels: ["Polsby-Popper", "Num Maj/Min Districts", "Efficiency-Gap", "Competitive Districts", "Projected Fairness", "Compactness"],
+  datasets: [{
+    label: "Republican",
+    backgroundColor: "rgba(200,0,0,0.2)",
+    data: [34, 10, 24, 3, 53, 36]
+  }, {
+    label: "Democrat",
+    backgroundColor: "rgba(0,0,200,0.2)",
+    data: [65, 5, 31, 4, 75, 26]
+  }]
+};
+
+
 var radarChart = new Chart(marksCanvas, {
   type: 'radar',
-  data: marksData
+  data: compareData
 });
 
 var popequal = document.getElementById("popequal");
 
-var popChar = new Chart(popequal, {
+var seatsvotes = new Chart(popequal, {
   type: 'line',
   data: marksData
-});
+})
+
+
+var trace1 = {
+  x: [1, 2, 3, 4, 4, 4, 8, 9, 10],
+  type: 'box',
+  name: 'Enacted Plan'
+};
+
+var trace2 = {
+  x: [2, 3, 3, 3, 3, 5, 6, 6, 7],
+  type: 'box',
+  name: 'Set 2'
+};
+
+var data = [trace1];
+
+var layout = {
+  title: 'Horizontal Box Plot'
+};
+
+Plotly.newPlot('boxplot', data, layout);
