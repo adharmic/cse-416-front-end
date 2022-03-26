@@ -52,7 +52,7 @@ var marksData = {
 };
 
 var compareData = {
-  labels: ["Polsby-Popper", "Num Maj/Min Districts", "Efficiency-Gap", "Competitive Districts", "Projected Fairness", "Compactness"],
+  labels: ["Polsby-Popper", "Num Maj-Min Districts", "Efficiency-Gap", "Competitive Districts", "Projected Fairness", "Compactness"],
   datasets: [{
     label: "Republican",
     backgroundColor: "rgba(200,0,0,0.2)",
