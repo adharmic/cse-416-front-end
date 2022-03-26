@@ -100,6 +100,10 @@ function toggleBoxplot() {
 }
 
 function zoomToFeature(e, state=null) {
+    map.eachLayer(function (layer) {
+        map.removeLayer(layer);
+    });
+    positron.addTo(map);
     var target;
     if(e !== null) {
         target = e.target;
