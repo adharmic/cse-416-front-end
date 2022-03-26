@@ -93,7 +93,7 @@ var trace2 = {
 var data = [trace1];
 
 var layout = {
-  title: 'Horizontal Box Plot'
+  title: 'Plan Statistics'
 };
 
 Plotly.newPlot('boxplot', data, layout);

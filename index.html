@@ -44,9 +44,9 @@
                     Select State
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a onclick="editBoundary(0)" class="dropdown-item" href="#">Illinois</a>
-                    <a onclick="editBoundary(1)" class="dropdown-item" href="#">Louisiana</a>
-                    <a onclick="editBoundary(2)" class="dropdown-item" href="#">Nevada</a>
+                    <a onclick="zoomToFeature(null, 2)" class="dropdown-item" href="#">Illinois</a>
+                    <a onclick="zoomToFeature(null, 1)" class="dropdown-item" href="#">Louisiana</a>
+                    <a onclick="zoomToFeature(null, 0)" class="dropdown-item" href="#">Nevada</a>
                 </div>
             </div>
             <div id="boundry-picker" class="dropleft ml-auto">
@@ -74,7 +74,7 @@
         </div>
         <div id="Available" class="tabcontent1">
             <div class="measure-form">
-                <label class="container">Current Enacted
+                <label class="container">Approved Plan
                     <input type="checkbox">
                     <span class="checkmark"></span>
                 </label>
@@ -83,6 +83,10 @@
                     <span class="checkmark"></span>
                 </label>
                 <label class="container">Democratic Proposed
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Plan 4
                     <input type="checkbox">
                     <span class="checkmark"></span>
                 </label>
@@ -138,14 +142,14 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <th scope="row">Enacted</th>
+                        <th scope="row">Approved</th>
                         <td>3</td>
                         <td>53</td>
                         <td>.74</td>
                         <td>2:2</td>
                     </tr>
                     <tr>
-                        <th scope="row">Senate Proposed</th>
+                        <th scope="row">Republican Proposed</th>
                         <td>2</td>
                         <td>39</td>
                         <td>.60</td>
@@ -171,7 +175,7 @@
             </table>
         </div>
         <div id="Rome" class="tabcontent">
-            <p>Partisan Bias</p>
+            <!-- <p>Partisan Bias</p> -->
             <div>
                 <canvas id="popequal"></canvas>
             </div>

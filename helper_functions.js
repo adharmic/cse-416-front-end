@@ -99,9 +99,17 @@ function toggleBoxplot() {
     }
 }
 
-function zoomToFeature(e) {
+function zoomToFeature(e, state=null) {
+    var target;
+    if(e !== null) {
+        target = e.target;
+    }
+    if(state !== null) {
+        target = state_layers[state];
+    }
+    console.log(target);
     // DETERMINES WHICH DATA TO GET
-    if(e.target.options.style.className === "32") {
+    if(target.options.style.className === "32") {
         $.get( "http://localhost:8080/messages/1", function( data ) {
             $( ".result" ).html( data );
             $(function () {
@@ -111,7 +119,7 @@ function zoomToFeature(e) {
             });
           });
     }
-    else if(e.target.options.style.className === "22") {
+    else if(target.options.style.className === "22") {
         $.get( "http://localhost:8080/messages/2", function( data ) {
             $( ".result" ).html( data );
             $(function () {
@@ -137,14 +145,14 @@ function zoomToFeature(e) {
     picker.style.display = "block";
     zoomed = true;
     map.setMinZoom(6.5);
-    map.fitBounds(e.target.getBounds().pad(.5));
+    map.fitBounds(target.getBounds().pad(.5));
     // map.setMinZoom(map.getZoom());
     state_layers.forEach(element => {
         // element.setOpacity(.5);
         makeInvis(element);
     });
-    showDistricts(e.target.options.style.className);
-    var bounds = e.target.getBounds().pad(.5);
+    showDistricts(target.options.style.className);
+    var bounds = target.getBounds().pad(.5);
     bounds.extend(L.latLng([bounds.getSouthEast().lat, bounds.getSouthEast().lng + 2.25]));
     // console.log(bounds);
     // bounds.include(L.latLng([bounds.getSouthWest().lat, bounds.getSouthWest().lon]));
