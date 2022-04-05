@@ -93,6 +93,15 @@
                 </label>
             </div>
             <button onclick="toggleBoxplot()" type="button" id="showBox" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+                Show Seats-Votes
+            </button>
+            <button onclick="toggleBoxplot()" type="button" id="showBox" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+                Compare Selected
+            </button>
+            <button onclick="toggleBoxplot()" type="button" id="showBox" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+                Show Seawulf Data
+            </button>
+            <button onclick="toggleBoxplot()" type="button" id="showBox" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
                 Toggle Box/Whisker
             </button>
 
@@ -125,10 +134,10 @@
 
     <div class="selector">
         <div class="tab">
-            <button class="tablinks" id="defaultOpen" onclick="openCity(event, 'Tokyo')">Plan Summary</button>
-            <button class="tablinks" onclick="openCity(event, 'Paris')">Compare Plans</button>
-            <button class="tablinks" onclick="openCity(event, 'Rome')">Seats-Votes</button>
-            <button class="tablinks" onclick="openCity(event, 'SWulf')">Seawulf Data</button>
+            <button class="tablinks" id="defaultOpen" onclick="openCity(event, 'Tokyo')">Summary of Plans</button>
+            <!-- <button class="tablinks" onclick="openCity(event, 'Paris')">Compare Plans</button>\\\\\\\\\`-->
+            <!-- <button class="tablinks" onclick="openCity(event, 'Rome')">Seats-Votes</button> -->
+            <!-- <button class="tablinks" onclick="openCity(event, 'SWulf')">Seawulf Data</button> -->
         </div>
         <div id="Paris" class="tabcontent">
             <table id="table" class="table table-striped table-dark">

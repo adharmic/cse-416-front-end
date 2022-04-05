@@ -166,10 +166,11 @@ html, body, #map{
 }
 
 #showBox {
-  position: absolute;
+  /* position: absolute; */
   bottom: 10%;
   right: 25%;
   width: 50%;
+  margin-bottom: 25px;
 }
 
 .js-plotly-plot,
