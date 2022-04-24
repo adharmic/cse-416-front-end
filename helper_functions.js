@@ -94,7 +94,7 @@ function loadStates() {
 function toggleBoxplot() {
     bplot = document.getElementById("boxplot");
     console.log(bplot);
-    if(bplot.classList.contains("visible")) {
+    if (bplot.classList.contains("visible")) {
         bplot.classList.remove("visible");
         bplot.classList.add("invisible");
     }
@@ -105,49 +105,49 @@ function toggleBoxplot() {
 }
 
 // TODO: extricate fetch requests into separate js file for handling server connections
-function zoomToFeature(e, state=null) {
+function zoomToFeature(e, state = null) {
     map.eachLayer(function (layer) {
         map.removeLayer(layer);
     });
     positron.addTo(map);
     var target;
-    if(e !== null) {
+    if (e !== null) {
         target = e.target;
     }
-    if(state !== null) {
+    if (state !== null) {
         target = state_layers[state];
     }
     console.log(target);
     // DETERMINES WHICH DATA TO GET
-    if(target.options.style.className === "32") {
-        $.get( "http://localhost:8080/messages/1", function( data ) {
-            $( ".result" ).html( data );
+    if (target.options.style.className === "32") {
+        $.get("http://localhost:8080/messages/1", function (data) {
+            $(".result").html(data);
             $(function () {
                 $('#table').bootstrapTable({
                     data: [data]
                 });
             });
-          });
+        });
     }
-    else if(target.options.style.className === "22") {
-        $.get( "http://localhost:8080/messages/2", function( data ) {
-            $( ".result" ).html( data );
+    else if (target.options.style.className === "22") {
+        $.get("http://localhost:8080/messages/2", function (data) {
+            $(".result").html(data);
             $(function () {
                 $('#table').bootstrapTable({
                     data: [data]
                 });
             });
-          });
+        });
     }
     else {
-        $.get( "http://localhost:8080/messages/3", function( data ) {
-            $( ".result" ).html( data );
+        $.get("http://localhost:8080/messages/3", function (data) {
+            $(".result").html(data);
             $(function () {
                 $('#table').bootstrapTable({
                     data: [data]
                 });
             });
-          });
+        });
     }
     var selector = document.getElementsByClassName("selector");
     selector[0].style.display = "block";
