@@ -1,12 +1,16 @@
+// Helper functions for map changes
+
 var zoomed = false;
 
+
+// Removes all map data and resets to a basic state view
 function resetMap() {
     $(function () {
         $('#table').bootstrapTable('destroy');
     });
     var selector = document.getElementsByClassName("selector");
     selector[0].style.display = "none";
-    var picker = document.getElementById("plans-picker")
+    var picker = document.getElementById("plans-picker");
     picker.style.display = "none";
     map.setMinZoom(4);
     map.setMaxZoom(10);
@@ -21,6 +25,7 @@ function resetMap() {
 
 }
 
+// 
 function reAddStates() {
     state_layers.forEach(element => {
         element.addTo(map);
@@ -99,6 +104,7 @@ function toggleBoxplot() {
     }
 }
 
+// TODO: extricate fetch requests into separate js file for handling server connections
 function zoomToFeature(e, state=null) {
     map.eachLayer(function (layer) {
         map.removeLayer(layer);
@@ -138,7 +144,7 @@ function zoomToFeature(e, state=null) {
             $( ".result" ).html( data );
             $(function () {
                 $('#table').bootstrapTable({
-                    data: data
+                    data: [data]
                 });
             });
           });
