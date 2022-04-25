@@ -5,6 +5,20 @@
   --light: #EEEEEE;
 }
 
+.info {
+  box-shadow: 0px 0px 3px black;
+  width: auto;
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  background: var(--light);
+  border-radius: 5px;
+}
+.info h6 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  color: #000;
+}
+
 .btn-secondary {
   background-color: var(--dark);
 }
@@ -114,6 +128,7 @@ td img {
   height: 93.2%;
   z-index: 1000;
   overflow-y: auto;
+  box-shadow: 5px 0px 5px var(--dark);
 }
 
 #Available {
@@ -121,6 +136,8 @@ td img {
 }
 
 .selector {
+  
+  box-shadow: -5px 0px 5px var(--dark);
   display: block;
   position: fixed;
   background: var(--light);
@@ -148,6 +165,12 @@ nav {
 
 body {
   font-family: 'Montserrat', sans-serif !important;
+}
+
+.leaflet-control-container {
+  position: absolute;
+  left: 20%;
+  top: .5%;
 }
 
 html,

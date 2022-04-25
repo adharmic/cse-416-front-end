@@ -2,6 +2,7 @@
 
 var zoomed = false;
 
+var gump;
 
 // Removes all map data and resets to a basic state view
 function resetMap() {
@@ -22,7 +23,7 @@ function resetMap() {
     positron.addTo(map);
     reAddStates();
     resetStates();
-
+    map.removeControl(info);
 }
 
 // 
@@ -37,6 +38,11 @@ function resetStates() {
     state_layers.forEach(element => {
         makeVis(element);
     });
+}
+
+function resetHighlightDistrict(e) {
+    gump.setStyle(style);
+    info.update();
 }
 
 function highlightFeature(e) {
@@ -57,8 +63,9 @@ function highlightFeature(e) {
 }
 
 function showDistricts(id) {
-    // L.geoJSON(districts).addTo(map);
-    var gump = L.geoJSON(districts, {
+    gump = L.geoJSON(districts, {
+        style: style,
+        onEachFeature: onEachStateFeature,
         filter: function (feature) {
             return (feature.properties.STATE === id);
         }
@@ -104,11 +111,35 @@ function toggleBoxplot() {
     }
 }
 
+// This highlights the layer on hover, also for mobile
+function highlightDistrict(e) {
+    resetHighlightDistrict(e);
+    var layer = e.target;
+    layer.setStyle({
+        weight: 4,
+        color: 'black',
+        fillOpacity: 0.9
+    });
+    console.log(layer.feature.properties);
+    info.update(layer.feature.properties);
+}
+
+
+function onEachStateFeature(feature, layer) {
+    layer.on({
+        mouseover: highlightDistrict,
+        mouseout: resetHighlightDistrict,
+        click: highlightDistrict
+    });
+}
+
 // TODO: extricate fetch requests into separate js file for handling server connections
 function zoomToFeature(e, state = null) {
     map.eachLayer(function (layer) {
         map.removeLayer(layer);
     });
+    info.addTo(map);
+    document.getElementById("default-plan").click();
     positron.addTo(map);
     var target;
     if (e !== null) {
@@ -117,7 +148,6 @@ function zoomToFeature(e, state = null) {
     if (state !== null) {
         target = state_layers[state];
     }
-    console.log(target);
     // DETERMINES WHICH DATA TO GET
     if (target.options.style.className === "32") {
         $.get("http://localhost:8080/messages/1", function (data) {

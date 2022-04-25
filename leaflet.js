@@ -23,8 +23,9 @@ map.removeControl(map.zoomControl);
 
 var cartodbAttribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution">CARTO</a>';
 
-var positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-    attribution: cartodbAttribution
+var positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+	subdomains: 'abcd'
 }).addTo(map);
 
 var state_layers = [];
@@ -40,3 +41,29 @@ state_layers.forEach(element => {
 // L.geoJSON(states).on('mouseover', highlightFeature).addTo(map);
 
 map.setView([0, 0], 0);
+
+// var info = L.control({position: 'topleft'});
+// info.onAdd = function (map) {
+//   this._div = L.DomUtil.create('div', 'info');
+//   return this._div;
+// };
+
+// Creates an info box on the map
+var info = L.control({ position: 'topleft' });
+info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info');
+    this.update();
+    return this._div;
+};
+
+// Edit info box text and variables (such as props.density2010) to match those in your GeoJSON data
+info.update = function (props) {
+    this._div.innerHTML = '<h6><nobr>District Information:</h6>';
+
+    if(props) {
+        this._div.innerHTML += ("<br /><b>GEO ID:</b> " + props.GEO_ID + "<br /><nobr><b>Congressional District Number:</b> " + props.CD);
+    }
+    else {
+        this._div.innerHTML += "<nobr> Hover over a district"
+    }
+};
