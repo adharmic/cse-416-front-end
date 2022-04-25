@@ -3,7 +3,7 @@
 var currState;
 
 function getState(state_code) {
-  $.get("http://localhost:8080/messages/" + state_code, function (data) {
+  $.get("http://localhost:8080/state/" + state_code, function (data) {
     $(".result").html(data);
     $(function () {
       parseSummary(data);

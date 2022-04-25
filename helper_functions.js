@@ -4,6 +4,21 @@ var zoomed = false;
 
 var district_data;
 
+class TwoWayMap {
+    constructor(map) {
+       this.map = map;
+       this.reverseMap = {};
+       for(const key in map) {
+          const value = map[key];
+          this.reverseMap[value] = key;   
+       }
+    }
+    get(key) { return this.map[key]; }
+    revGet(key) { return this.reverseMap[key]; }
+    keys() {return Object.keys(this.map);}
+    values() {return Object.keys(this.reverseMap);}
+}
+
 // Removes all map data and resets to a basic state view
 function resetMap() {
     $(function () {
@@ -67,7 +82,7 @@ function showDistricts(id) {
         style: style,
         onEachFeature: onEachStateFeature,
         filter: function (feature) {
-            return (feature.properties.STATE === id);
+            return (feature.properties.STATE === DISTRICTING_STATES.revGet(id));
         }
     }).addTo(map);
 }
@@ -78,7 +93,7 @@ function resetHighlight(e) {
 }
 
 function loadStates() {
-    DISTRICTING_STATES.forEach(element => {
+    for(const [key, value] of Object.entries(DISTRICTING_STATES.map)) {
         state_layers.push(
             L.geoJSON(states, {
                 style: {
@@ -88,27 +103,32 @@ function loadStates() {
                     color: 'white',
                     dashArray: '3',
                     fillOpacity: 0.5,
-                    className: element
+                    className: value
                 },
                 filter: function (feature) {
-                    return (feature.properties.STATE === element);
+                    return (feature.properties.STATE === key);
                 }
             })
         )
-    });
-}
-
-function toggleBoxplot() {
-    bplot = document.getElementById("boxplot");
-    console.log(bplot);
-    if (bplot.classList.contains("visible")) {
-        bplot.classList.remove("visible");
-        bplot.classList.add("invisible");
     }
-    else {
-        bplot.classList.add("visible");
-        bplot.classList.remove("invisible");
-    }
+    // DISTRICTING_STATES.forEach(element => {
+    //     state_layers.push(
+    //         L.geoJSON(states, {
+    //             style: {
+    //                 fillColor: '#800026',
+    //                 weight: 2,
+    //                 opacity: 1,
+    //                 color: 'white',
+    //                 dashArray: '3',
+    //                 fillOpacity: 0.5,
+    //                 className: element
+    //             },
+    //             filter: function (feature) {
+    //                 return (feature.properties.STATE === element);
+    //             }
+    //         })
+    //     )
+    // });
 }
 
 // This highlights the layer on hover, also for mobile
@@ -120,7 +140,6 @@ function highlightDistrict(e) {
         color: 'black',
         fillOpacity: 0.5
     });
-    console.log(layer.feature.properties);
     info.update(layer.feature.properties);
 }
 
@@ -149,36 +168,8 @@ function zoomToFeature(e, state = null) {
         target = state_layers[state];
     }
     // DETERMINES WHICH DATA TO GET
-    if (target.options.style.className === "32") {
-        $.get("http://localhost:8080/messages/1", function (data) {
-            $(".result").html(data);
-            $(function () {
-                $('#table').bootstrapTable({
-                    data: [data]
-                });
-            });
-        });
-    }
-    else if (target.options.style.className === "22") {
-        $.get("http://localhost:8080/messages/2", function (data) {
-            $(".result").html(data);
-            $(function () {
-                $('#table').bootstrapTable({
-                    data: [data]
-                });
-            });
-        });
-    }
-    else {
-        $.get("http://localhost:8080/messages/3", function (data) {
-            $(".result").html(data);
-            $(function () {
-                $('#table').bootstrapTable({
-                    data: [data]
-                });
-            });
-        });
-    }
+    getState(target.options.style.className);
+    
     var selector = document.getElementsByClassName("selector");
     selector[0].style.display = "block";
     var picker = document.getElementById("plans-picker")

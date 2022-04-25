@@ -6,10 +6,10 @@ selector[0].style.display = "none";
 var picker = document.getElementById("plans-picker")
 picker.style.display = "none";
 
-const DISTRICTING_STATES = ["32", "22", "17"]
+const DISTRICTING_STATES = new TwoWayMap({"32":"NV", "22":"LA", "17":"IL"});
 
 const states = state_data.features.filter(function (entry) {
-    return DISTRICTING_STATES.includes(entry.properties.STATE);
+    return DISTRICTING_STATES.keys().includes(entry.properties.STATE);
 });
 
 var map = L.map('map', {

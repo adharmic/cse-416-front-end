@@ -30,10 +30,32 @@
 <body>
 
     <div id="seat-vote" class="popup">
-        <div class="popup-header">Click here to move</div>
-        <p>Move</p>
-        <p>this</p>
-        <p>DIV</p>
+        <div class="popup-header">
+            <span id="SV-header"><b>Seats-Votes Curve</b></span>
+            <span id="SV-close" class="popup-close" onclick="togglePopup(document.getElementById('seat-vote'))">&#10006;</span>
+            </div>
+        <p>Dummy Data Goes Here</p>
+    </div>
+    <div id="compare" class="popup">
+        <div class="popup-header">
+            <span id="SV-header"><b>Plan Comparison</b></span>
+            <span id="SV-close" class="popup-close" onclick="togglePopup(document.getElementById('compare'))">&#10006;</span>
+            </div>
+        <p>Dummy Data Goes Here</p>
+    </div>
+    <div id="seawulf" class="popup">
+        <div class="popup-header">
+            <span id="SV-header"><b>Seawulf Statistics</b></span>
+            <span id="SV-close" class="popup-close" onclick="togglePopup(document.getElementById('seawulf'))">&#10006;</span>
+            </div>
+        <p>Dummy Data Goes Here</p>
+    </div>
+    <div id="boxplot" class="popup">
+        <div class="popup-header">
+            <span id="SV-header"><b>Box-and-Whisker Diagram</b></span>
+            <span id="SV-close" class="popup-close" onclick="togglePopup(document.getElementById('boxplot'))">&#10006;</span>
+            </div>
+        <p>Dummy Data Goes Here</p>
     </div>
 
 
@@ -85,41 +107,39 @@
         <div id="Available" class="">
             <div class="measure-form">
                 <label id="default-plan" class="container">Approved Plan
-                    <input type="checkbox">
+                    <input type="radio" checked="checked" name="radio">
                     <span class="checkmark"></span>
-                </label>
-                <label class="container">Republican Proposed
-                    <input type="checkbox">
+                  </label>
+                  <label class="container">Republican Proposed
+                    <input type="radio" name="radio">
                     <span class="checkmark"></span>
-                </label>
-                <label class="container">Democratic Proposed
-                    <input type="checkbox">
+                  </label>
+                  <label class="container">Democratic Proposed
+                    <input type="radio" name="radio">
                     <span class="checkmark"></span>
-                </label>
-                <label class="container">Plan 4
-                    <input type="checkbox">
+                  </label>
+                  <label class="container">Plan 4
+                    <input type="radio" name="radio">
                     <span class="checkmark"></span>
-                </label>
+                  </label>
 
             </div>
-            <button onclick="toggleBoxplot()" type="button" id="showBox" class="btn btn-primary" data-toggle="button"
+            <button onclick="togglePopup(document.getElementById('seat-vote'))" type="button" id="showBox" class="btn btn-primary"
                 aria-pressed="false" autocomplete="off">
                 Show Seats-Votes
             </button>
-            <button onclick="toggleBoxplot()" type="button" id="showBox" class="btn btn-primary" data-toggle="button"
+            <button onclick="togglePopup(document.getElementById('compare'))" type="button" id="showBox" class="btn btn-primary"
                 aria-pressed="false" autocomplete="off">
                 Compare Selected
             </button>
-            <button onclick="toggleBoxplot()" type="button" id="showBox" class="btn btn-primary" data-toggle="button"
+            <button onclick="togglePopup(document.getElementById('seawulf'))" type="button" id="showBox" class="btn btn-primary"
                 aria-pressed="false" autocomplete="off">
                 Show Seawulf Data
             </button>
-            <button onclick="toggleBoxplot()" type="button" id="showBox" class="btn btn-primary" data-toggle="button"
+            <button onclick="togglePopup(document.getElementById('boxplot'))" type="button" id="showBox" class="btn btn-primary"
                 aria-pressed="false" autocomplete="off">
                 Toggle Box/Whisker
             </button>
-
-            <div id="boxplot" class="invisible"></div>
         </div>
     </div>
 
