@@ -1,7 +1,7 @@
 :root{
   --darker: #222831;
   --dark: #343a40;
-  --primary: #00ADB5;
+  --primary: #007bff;
   --light: #EEEEEE;
 }
 
@@ -49,11 +49,6 @@ td img {
   margin-left: auto;
   margin-right: auto;
 
-}
-
-#Rome {
-  text-align: center;
-  overflow: auto;
 }
 
 /* Style the tab */
@@ -122,13 +117,13 @@ td img {
   position: fixed;
   background: var(--light);
   color: black;
-  top: 6.8%;
+  top: 55px;
   left: 0;
   width: 20%;
   height: 93.2%;
   z-index: 1000;
   overflow-y: auto;
-  box-shadow: 5px 0px 5px var(--dark);
+  box-shadow: 5px 5px 5px var(--dark);
 }
 
 #Available {
@@ -137,12 +132,12 @@ td img {
 
 .selector {
   
-  box-shadow: -5px 0px 5px var(--dark);
+  box-shadow: -5px 5px 5px var(--dark);
   display: block;
   position: fixed;
   background: var(--light);
   color: #f1f1f1;
-  top: 6.8%;
+  top: 55px;
   right: 0;
   width: 35%;
   height: 93.2%;
@@ -264,6 +259,75 @@ body,
   transform: rotate(45deg);
 }
 
-#Paris {
-  overflow-y: auto;
+/* Popup Element */
+.popup {
+  z-index: 2000;
+  background-color: var(--light);
+  border: 1px solid #d3d3d3;
+  text-align: center;
+  min-height: 150px;
+  min-width: 300px;
+  max-height: 300px;
+  max-width: 600px;
+}
+
+/*Drgable */
+
+.popup {
+  position: absolute;
+  /*resize: both; !*enable this to css resize*! */
+  overflow: auto;
+}
+
+.popup-header {
+  padding: 10px;
+  cursor: move;
+  z-index: 2000;
+  background-color: var(--primary);
+  color: #fff;
+}
+
+/*Resizeable*/
+
+.popup .resizer-right {
+  width: 5px;
+  height: 100%;
+  background: transparent;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  cursor: e-resize;
+}
+
+.popup .resizer-bottom {
+  width: 100%;
+  height: 5px;
+  background: transparent;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  cursor: n-resize;
+}
+
+.popup .resizer-both {
+  width: 5px;
+  height: 5px;
+  background: transparent;
+  z-index: 2000;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  cursor: nw-resize;
+}
+
+/*NOSELECT*/
+
+.popup * {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }

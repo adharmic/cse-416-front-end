@@ -29,6 +29,14 @@
 
 <body>
 
+    <div id="seat-vote" class="popup">
+        <div class="popup-header">Click here to move</div>
+        <p>Move</p>
+        <p>this</p>
+        <p>DIV</p>
+    </div>
+
+
 
     <nav class="navbar navbar-expand-lg navbar fixed-top">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler"
@@ -40,7 +48,6 @@
                 Sparks</a>
             <button type="button" onClick="resetMap()" class="btn btn-primary mr-1">Reload</button>
             <button type="button" class="btn btn-primary mr-1"><i class="fa fa-camera"></i> Save Screenshot</button>
-
 
             <div id="boundry-picker" class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -73,10 +80,7 @@
 
     <div id="plans-picker">
         <div class="tab tab-left">
-            <!-- <button class="tablinks1" id="defaultPlantabOpen" onclick="openPlantab(event, 'Available')">Available
-                Plans</button> -->
             <h2>Available Plans</h2>
-            <!-- <button class="tablinks1" onclick="openPlantab(event, 'Generated')">Generated Plans</button> -->
         </div>
         <div id="Available" class="">
             <div class="measure-form">
@@ -117,34 +121,10 @@
 
             <div id="boxplot" class="invisible"></div>
         </div>
-        <!-- <div id="Generated" class="tabcontent1">
-            <div class="measure-form">
-                <label class="container">Gen Plan 1
-                    <input type="checkbox">
-                    <span class="checkmark"></span>
-                </label>
-                <label class="container">Gen Plan 2
-                    <input type="checkbox">
-                    <span class="checkmark"></span>
-                </label>
-                <label class="container">Gen Plan 3
-                    <input type="checkbox">
-                    <span class="checkmark"></span>
-                </label>
-                <label class="container">Gen Plan 4
-                    <input type="checkbox">
-                    <span class="checkmark"></span>
-                </label>
-            </div>
-
-
-        </div> -->
-
     </div>
 
     <div class="selector">
         <div class="tab">
-            <!-- <button class="tablinks" id="defaultOpen" onclick="openTab(event, 'PlanSummary')">Summary of Plans</button> -->
             <h2>Summary of Plans</h2>
         </div>
         <div id="PlanSummary" class="">
@@ -160,12 +140,6 @@
                 </thead>
             </table>
         </div>
-        <div id="Rome" class="tabcontent">
-            <!-- <p>Partisan Bias</p> -->
-            <div>
-                <canvas id="popequal"></canvas>
-            </div>
-        </div>
     </div>
     <div id="map"></div>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -175,18 +149,19 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
-
 </body>
 
 </html>
+<script src="./data/state_outline.js"></script>
+<script src="./data/districts.js"></script>
 
+
+<script src="popup_handler.js"></script>
+<script src="global_variables.js"></script>
 <script src="server.js"></script>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
-<script src="./data/state_outline.js"></script>
-<script src="./data/districts.js"></script>
-
 <script src="helper_functions.js"></script>
 <script src="data_window.js"></script>
 <script src="chart_functions.js"></script>

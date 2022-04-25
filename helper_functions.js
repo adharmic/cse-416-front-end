@@ -2,7 +2,7 @@
 
 var zoomed = false;
 
-var gump;
+var district_data;
 
 // Removes all map data and resets to a basic state view
 function resetMap() {
@@ -41,7 +41,7 @@ function resetStates() {
 }
 
 function resetHighlightDistrict(e) {
-    gump.setStyle(style);
+    district_data.setStyle(style);
     info.update();
 }
 
@@ -53,7 +53,7 @@ function highlightFeature(e) {
             weight: 5,
             color: '#666',
             dashArray: '',
-            fillOpacity: 0.7
+            fillOpacity: 0.5
         });
 
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
@@ -63,7 +63,7 @@ function highlightFeature(e) {
 }
 
 function showDistricts(id) {
-    gump = L.geoJSON(districts, {
+    district_data = L.geoJSON(districts, {
         style: style,
         onEachFeature: onEachStateFeature,
         filter: function (feature) {
@@ -87,7 +87,7 @@ function loadStates() {
                     opacity: 1,
                     color: 'white',
                     dashArray: '3',
-                    fillOpacity: 0.7,
+                    fillOpacity: 0.5,
                     className: element
                 },
                 filter: function (feature) {
@@ -118,7 +118,7 @@ function highlightDistrict(e) {
     layer.setStyle({
         weight: 4,
         color: 'black',
-        fillOpacity: 0.9
+        fillOpacity: 0.5
     });
     console.log(layer.feature.properties);
     info.update(layer.feature.properties);
@@ -213,7 +213,7 @@ function makeVis(layer) {
         opacity: 1,
         color: 'white',
         dashArray: '3',
-        fillOpacity: 0.7
+        fillOpacity: 0.5
     })
 }
 
@@ -224,7 +224,7 @@ function style(feature) {
         opacity: 1,
         color: 'white',
         dashArray: '3',
-        fillOpacity: 0.7,
+        fillOpacity: 0.5,
         className: feature.properties.GEO_ID
     };
 }
