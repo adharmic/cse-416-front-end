@@ -31,30 +31,38 @@
 
     <div id="seat-vote" class="popup">
         <div class="popup-header">
-            <span id="SV-header"><b>Seats-Votes Curve</b></span>
-            <span id="SV-close" class="popup-close" onclick="togglePopup(document.getElementById('seat-vote'))">&#10006;</span>
-            </div>
-        <p>Dummy Data Goes Here</p>
+            <span id="sv-header"><b>Seats-Votes Curve</b></span>
+            <span id="sv-close" class="popup-close"
+                onclick="togglePopup(document.getElementById('seat-vote'))">&#10006;</span>
+        </div>
+        <p class="sv-metric" id="sv-responsiveness">Responsiveness:</p>
+        <p class="sv-metric" id="sv-baf">Bias at 50%:</p>
+        <p class="sv-metric" id="sv-symmetry">Symmetry:</p>
+        <div id="sv-chart">
+        </div>
     </div>
     <div id="compare" class="popup">
         <div class="popup-header">
             <span id="SV-header"><b>Plan Comparison</b></span>
-            <span id="SV-close" class="popup-close" onclick="togglePopup(document.getElementById('compare'))">&#10006;</span>
-            </div>
+            <span id="SV-close" class="popup-close"
+                onclick="togglePopup(document.getElementById('compare'))">&#10006;</span>
+        </div>
         <p>Dummy Data Goes Here</p>
     </div>
     <div id="seawulf" class="popup">
         <div class="popup-header">
             <span id="SV-header"><b>Seawulf Statistics</b></span>
-            <span id="SV-close" class="popup-close" onclick="togglePopup(document.getElementById('seawulf'))">&#10006;</span>
-            </div>
+            <span id="SV-close" class="popup-close"
+                onclick="togglePopup(document.getElementById('seawulf'))">&#10006;</span>
+        </div>
         <p>Dummy Data Goes Here</p>
     </div>
     <div id="boxplot" class="popup">
         <div class="popup-header">
             <span id="SV-header"><b>Box-and-Whisker Diagram</b></span>
-            <span id="SV-close" class="popup-close" onclick="togglePopup(document.getElementById('boxplot'))">&#10006;</span>
-            </div>
+            <span id="SV-close" class="popup-close"
+                onclick="togglePopup(document.getElementById('boxplot'))">&#10006;</span>
+        </div>
         <p>Dummy Data Goes Here</p>
     </div>
 
@@ -104,40 +112,29 @@
         <div class="tab tab-left">
             <h2>Available Plans</h2>
         </div>
-        <div id="Available" class="">
-            <div class="measure-form">
-                <label id="default-plan" class="container">Approved Plan
-                    <input type="radio" checked="checked" name="radio">
+        <div id="available" class="">
+            <div id="picker" class="measure-form">
+                <label id="default-plan" class="container" onclick="loadPlan(0)">
+                    <p>Approved Plan</p>
+                    <input type="radio" checked="checked" name="radio" >
                     <span class="checkmark"></span>
-                  </label>
-                  <label class="container">Republican Proposed
-                    <input type="radio" name="radio">
-                    <span class="checkmark"></span>
-                  </label>
-                  <label class="container">Democratic Proposed
-                    <input type="radio" name="radio">
-                    <span class="checkmark"></span>
-                  </label>
-                  <label class="container">Plan 4
-                    <input type="radio" name="radio">
-                    <span class="checkmark"></span>
-                  </label>
+                </label>
 
             </div>
-            <button onclick="togglePopup(document.getElementById('seat-vote'))" type="button" id="showBox" class="btn btn-primary"
-                aria-pressed="false" autocomplete="off">
+            <button onclick="togglePopup(document.getElementById('seat-vote')); querySeatShare();" type="button" id="showBox"
+                class="btn btn-primary" aria-pressed="false" autocomplete="off">
                 Show Seats-Votes
             </button>
-            <button onclick="togglePopup(document.getElementById('compare'))" type="button" id="showBox" class="btn btn-primary"
-                aria-pressed="false" autocomplete="off">
-                Compare Selected
+            <button onclick="togglePopup(document.getElementById('compare'))" type="button" id="showBox"
+                class="btn btn-primary" aria-pressed="false" autocomplete="off">
+                Compare Plans
             </button>
-            <button onclick="togglePopup(document.getElementById('seawulf'))" type="button" id="showBox" class="btn btn-primary"
-                aria-pressed="false" autocomplete="off">
+            <button onclick="togglePopup(document.getElementById('seawulf'));" type="button" id="showBox"
+                class="btn btn-primary" aria-pressed="false" autocomplete="off">
                 Show Seawulf Data
             </button>
-            <button onclick="togglePopup(document.getElementById('boxplot'))" type="button" id="showBox" class="btn btn-primary"
-                aria-pressed="false" autocomplete="off">
+            <button onclick="togglePopup(document.getElementById('boxplot'))" type="button" id="showBox"
+                class="btn btn-primary" aria-pressed="false" autocomplete="off">
                 Toggle Box/Whisker
             </button>
         </div>
@@ -151,11 +148,11 @@
             <table id="table" class="table table-striped table-dark">
                 <thead>
                     <tr>
-                        <th data-field="id" scope="col">Plan Name</th>
-                        <th data-field="name" scope="col">Majority-minority districts</th>
-                        <th data-field="message" scope="col">Equality Statistics</th>
-                        <th data-field="timesAccessed" scope="col">Polsby-Popper Value</th>
-                        <th data-field="timesAccessed" scope="col">R/D Split</th>
+                        <th data-field="name" scope="col">Plan Name</th>
+                        <th data-field="numMinorityMajorityDistricts" scope="col">Maj-Min Districts</th>
+                        <th data-field="meanPopulationDeviation" scope="col">Equality Statistics</th>
+                        <th data-field="compactness" scope="col">Polsby-Popper</th>
+                        <!-- <th data-field="timesAccessed" scope="col"></th> -->
                     </tr>
                 </thead>
             </table>

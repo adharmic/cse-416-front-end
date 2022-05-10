@@ -185,6 +185,7 @@ body,
 
 /* Customize the label (the container) */
 .container {
+  text-align: left;
   display: block;
   position: relative;
   padding-left: 35px;
@@ -258,20 +259,23 @@ body,
 
 /* Popup Element */
 .popup {
-  
   display: none;
   font-family: 'Montserrat', sans-serif !important;
   z-index: 2000;
   background-color: var(--light);
   border: 1px solid #d3d3d3;
   text-align: center;
-  min-height: 150px;
-  min-width: 300px;
+  min-height: 600px;
+  min-width: 602px;
   max-height: 600px;
-  max-width: 600px;
+  max-width: 602px;
   bottom: 0%;
   height: 150px;
   box-shadow: 5px 5px 50px black;
+}
+
+.sv-metric {
+  text-align: left;
 }
 
 /*Drgable */

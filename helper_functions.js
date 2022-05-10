@@ -2,21 +2,19 @@
 
 var zoomed = false;
 
-var district_data;
-
 class TwoWayMap {
     constructor(map) {
-       this.map = map;
-       this.reverseMap = {};
-       for(const key in map) {
-          const value = map[key];
-          this.reverseMap[value] = key;   
-       }
+        this.map = map;
+        this.reverseMap = {};
+        for (const key in map) {
+            const value = map[key];
+            this.reverseMap[value] = key;
+        }
     }
     get(key) { return this.map[key]; }
     revGet(key) { return this.reverseMap[key]; }
-    keys() {return Object.keys(this.map);}
-    values() {return Object.keys(this.reverseMap);}
+    keys() { return Object.keys(this.map); }
+    values() { return Object.keys(this.reverseMap); }
 }
 
 // Removes all map data and resets to a basic state view
@@ -28,6 +26,10 @@ function resetMap() {
     selector[0].style.display = "none";
     var picker = document.getElementById("plans-picker");
     picker.style.display = "none";
+    document.getElementById("seat-vote").style.display = "none";
+    document.getElementById("seawulf").style.display = "none";
+    document.getElementById("boxplot").style.display = "none";
+    document.getElementById("compare").style.display = "none";
     map.setMinZoom(4);
     map.setMaxZoom(10);
     map.setZoom(4.5);
@@ -93,7 +95,7 @@ function resetHighlight(e) {
 }
 
 function loadStates() {
-    for(const [key, value] of Object.entries(DISTRICTING_STATES.map)) {
+    for (const [key, value] of Object.entries(DISTRICTING_STATES.map)) {
         state_layers.push(
             L.geoJSON(states, {
                 style: {
@@ -111,24 +113,6 @@ function loadStates() {
             })
         )
     }
-    // DISTRICTING_STATES.forEach(element => {
-    //     state_layers.push(
-    //         L.geoJSON(states, {
-    //             style: {
-    //                 fillColor: '#800026',
-    //                 weight: 2,
-    //                 opacity: 1,
-    //                 color: 'white',
-    //                 dashArray: '3',
-    //                 fillOpacity: 0.5,
-    //                 className: element
-    //             },
-    //             filter: function (feature) {
-    //                 return (feature.properties.STATE === element);
-    //             }
-    //         })
-    //     )
-    // });
 }
 
 // This highlights the layer on hover, also for mobile
@@ -152,13 +136,12 @@ function onEachStateFeature(feature, layer) {
     });
 }
 
-// TODO: extricate fetch requests into separate js file for handling server connections
 function zoomToFeature(e, state = null) {
     map.eachLayer(function (layer) {
         map.removeLayer(layer);
     });
     info.addTo(map);
-    document.getElementById("default-plan").click();
+
     positron.addTo(map);
     var target;
     if (e !== null) {
@@ -167,9 +150,8 @@ function zoomToFeature(e, state = null) {
     if (state !== null) {
         target = state_layers[state];
     }
-    // DETERMINES WHICH DATA TO GET
     getState(target.options.style.className);
-    
+
     var selector = document.getElementsByClassName("selector");
     selector[0].style.display = "block";
     var picker = document.getElementById("plans-picker")
@@ -177,17 +159,20 @@ function zoomToFeature(e, state = null) {
     zoomed = true;
     map.setMinZoom(6.5);
     map.fitBounds(target.getBounds().pad(.5));
-    // map.setMinZoom(map.getZoom());
     state_layers.forEach(element => {
-        // element.setOpacity(.5);
         makeInvis(element);
     });
     showDistricts(target.options.style.className);
     var bounds = target.getBounds().pad(.5);
     bounds.extend(L.latLng([bounds.getSouthEast().lat, bounds.getSouthEast().lng + 2.25]));
-    // console.log(bounds);
-    // bounds.include(L.latLng([bounds.getSouthWest().lat, bounds.getSouthWest().lon]));
     map.setMaxBounds(bounds);
+}
+
+function loadPlan(id) {
+    console.log(id);
+    if (selected_plan != id) {
+        queryPlan(id);
+    }
 }
 
 function makeInvis(layer) {
