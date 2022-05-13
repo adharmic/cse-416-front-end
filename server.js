@@ -7,22 +7,26 @@ var available_plans;
 var selected_plan;
 
 function getState(state_code) {
+  current_state = "";
+  available_plans = [];
+  selected_plan = null;
   $.get("http://localhost:8080/state/" + state_code, function (data) {
     $(".result").html(data);
     $(function () {
       current_state = state_code;
-      displayPlanOptions(data.districtPlanIdToMetricsMap);
-      available_plans = data.districtPlanIdToMetricsMap;
 
       // Populates summary table with state data
-      var plan_summary = []
-      for (const [key, value] of Object.entries(data.districtPlanIdToMetricsMap)) {
-        value.meanPopulationDeviation = parseFloat(value.meanPopulationDeviation).toFixed(4);
-        value.compactness = parseFloat(value.compactness).toFixed(4);
-        plan_summary.push(value);
-      }
+      data.districtPlanMetricsList.forEach(element => {
+        available_plans.push(element.name);
+      });
+      displayPlanOptions();
+      // for (const [key, value] of Object.entries(data.districtPlanIdToMetricsMap)) {
+      //   value.meanPopulationDeviation = parseFloat(value.meanPopulationDeviation).toFixed(4);
+      //   value.compactness = parseFloat(value.compactness).toFixed(4);
+      //   plan_summary.push(value);
+      // }
       $('#table').bootstrapTable({
-        data: plan_summary
+        data: data.districtPlanMetricsList
       });
     });
   });
@@ -109,23 +113,96 @@ function querySeatShare() {
   });
 }
 
-function queryBoxWhisker() {
-  $.get('http://localhost:8080/district/box-whisker/' + state_code + '/' + selected_plan, function (data) {
+function queryBoxWhisker(demographic, name) {
+  var loader = document.getElementById('load-boxplot');
+
+  $.get('http://localhost:8080/district/box-whisker/' + current_state + '/' + selected_plan, function (data) {
+    var seawulf_plots = data.boxAndWhiskerData[demographic];
+    var district_plots = data.districtData[demographic];
+
+    var final = [];
+    const reducer = (accumulator, curr) => accumulator + curr;
+    district_plots.forEach(element => {
+      const sum = district_plots.reduce(reducer);
+      final.push((element / sum) * 100);
+    });
+
+    var data = [];
+    for (var i = 0; i < seawulf_plots.length; i++) {
+      var result = {
+        type: 'box',
+        y: Object.values(seawulf_plots[i]),
+        name: "SeaWulf Plan " + i,
+        boxpoints: 'all',
+        jitter: 0.5,
+        whiskerwidth: 0.2,
+        fillcolor: 'cls',
+        marker: {
+          size: 2
+        },
+        line: {
+          width: 1
+        }
+      };
+      data.push(result);
+    }
+    data.push({
+      type: 'box',
+      y: final,
+      name: available_plans[selected_plan],
+      boxpoints: 'all',
+      jitter: 0.5,
+      whiskerwidth: 0.2,
+      fillcolor: 'cls',
+      marker: {
+        size: 2
+      },
+      line: {
+        width: 1
+      }
+    });
+
+    layout = {
+      plot_bgcolor:"#EEEEEE",
+      paper_bgcolor:"#EEEEEE",
+      width: 800,
+      height: 400,
+      title: name + ' Population Data for ' + available_plans[selected_plan] + ' vs. Selected SeaWulf Plans',
+      yaxis: {
+        autorange: true,
+        showgrid: true,
+        zeroline: true,
+        dtick: 5,
+        gridcolor: 'rgb(255, 255, 255)',
+        gridwidth: 1,
+        zerolinecolor: 'rgb(255, 255, 255)',
+        zerolinewidth: 2
+      },
+      margin: {
+        l: 40,
+        r: 30,
+        b: 80,
+        t: 100
+      }
+    };
+
+    Plotly.newPlot('boxplot-chart', data, layout);
   });
 
 }
 
-function displayPlanOptions(plan_names) {
+function displayPlanOptions() {
+  var plan_names = available_plans;
   plan_list = document.getElementById("picker");
   first_plan = document.getElementById("default-plan")
 
-  first_plan.firstChild.nextSibling.innerHTML = plan_names[0].name;
+  first_plan.firstChild.nextSibling.innerHTML = plan_names[0];
 
   for (let index = 1; index < 4; index++) {
     new_plan = first_plan.cloneNode(true);
     new_plan.id = "";
     new_plan.onclick = function () { loadPlan(index) };
-    new_plan.firstChild.nextSibling.innerHTML = plan_names[index].name;
+    new_plan.firstChild.nextSibling.innerHTML = plan_names[index];
     plan_list.appendChild(new_plan);
   }
   document.getElementById("default-plan").click();

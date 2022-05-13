@@ -35,5 +35,3 @@ function editBoundary(bnum) {
   bcontent[bnum].className += " active";
 }
   
-document.getElementById("defaultOpen").click();
-document.getElementById("defaultPlantabOpen").click();

@@ -10,6 +10,10 @@
   cursor: pointer;
 }
 
+#demo-picker {
+  margin-top: 20px;
+}
+
 .info {
   
   font-family: 'Montserrat', sans-serif !important;
@@ -287,17 +291,19 @@ body,
   background-color: var(--light);
   border: 1px solid #d3d3d3;
   text-align: center;
-  min-height: 600px;
-  min-width: 602px;
-  max-height: 600px;
-  max-width: 602px;
   bottom: 0%;
-  height: 150px;
+  min-width: fit-content;
+  min-height: fit-content;
+  max-height: fit-content;
+  max-width: fit-content;
+  width: auto;
+  height: auto;
   box-shadow: 5px 5px 50px black;
 }
 
 .sv-metric {
-  text-align: left;
+  text-align: center;
+  margin: auto;
 }
 
 /*Drgable */
