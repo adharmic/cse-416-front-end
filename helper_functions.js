@@ -115,6 +115,14 @@ function loadStates() {
     }
 }
 
+function displayLoading(loader) {
+    loader.classList.add("display");
+}
+
+function hideLoading() {
+    loader.classList.remove("display");
+}
+
 // This highlights the layer on hover, also for mobile
 function highlightDistrict(e) {
     resetHighlightDistrict(e);

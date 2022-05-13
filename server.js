@@ -34,9 +34,11 @@ function queryPlan(id) {
 
 function querySeatShare() {
   var sv_display = document.getElementById('sv-chart');
+  var loader = document.getElementById('load-sv');
+  displayLoading(loader);
 
-  $.get('http://localhost:8080/state/district/seat-share/' + current_state + '/' + selected_plan, function (data) {
-    console.log(data.democratData);
+  $.get('http://localhost:8080/district/seat-share/' + current_state + '/' + selected_plan, function (data) {
+    hideLoading(loader);
 
     var x_coordinates_dem = [];
     var y_coordinates_dem = [];
@@ -105,6 +107,12 @@ function querySeatShare() {
     document.getElementById('sv-symmetry').innerHTML = "Symmetry: " + data.symmetry;
     document.getElementById('sv-header').innerHTML = "Seats-Votes Curve for " + available_plans[selected_plan].name;
   });
+}
+
+function queryBoxWhisker() {
+  $.get('http://localhost:8080/district/box-whisker/' + state_code + '/' + selected_plan, function (data) {
+  });
+
 }
 
 function displayPlanOptions(plan_names) {
