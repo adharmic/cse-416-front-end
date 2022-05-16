@@ -39,10 +39,10 @@ function queryPlan(id) {
 function querySeatShare() {
   var sv_display = document.getElementById('sv-chart');
   var loader = document.getElementById('load-sv');
-  displayLoading(loader);
+  // displayLoading(loader);
 
   $.get('http://localhost:8080/district/seat-share/' + current_state + '/' + selected_plan, function (data) {
-    hideLoading(loader);
+    // hideLoading(loader);
 
     var x_coordinates_dem = [];
     var y_coordinates_dem = [];
