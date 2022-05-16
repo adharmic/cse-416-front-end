@@ -35,7 +35,7 @@ function queryPlan(id) {
 function querySeatShare() {
   var sv_display = document.getElementById('sv-chart');
 
-  $.get('http://localhost:8080/state/district/seat-share/' + current_state + '/' + selected_plan, function (data) {
+  $.get('http://localhost:8080/district/seat-share/' + current_state + '/' + '0', function (data) {
     console.log(data.democratData);
 
     var x_coordinates_dem = [];
