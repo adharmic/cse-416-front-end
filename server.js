@@ -24,6 +24,7 @@ function getState(state_code) {
     $(".result").html(data);
     $(function () {
       current_state = state_code;
+      console.log(data);
 
       // Populates summary table with state data
       data.districtPlanMetricsList.forEach(element => {
@@ -58,6 +59,11 @@ function queryPlan(id) {
       lean = 100 * ((republican / total) - (democrat / total));
       data.features[i].properties.lean = lean;
       data.features[i].properties.pop = plan_stats[i]["TOTAL_POPULATION"];
+      data.features[i].properties.rep = plan_stats[i]["REPUBLICAN"];
+      data.features[i].properties.dem = plan_stats[i]["DEMOCRAT"];
+      data.features[i].properties.af = plan_stats[i]["AFRICAN_AMERICAN"];
+      data.features[i].properties.nat = plan_stats[i]["AMERICAN_INDIAN"];
+      data.features[i].properties.his = plan_stats[i]["HISPANIC_LATINO"];
     }
     showDistrict(data);
   });
@@ -186,20 +192,20 @@ function queryBoxWhisker(demographic, name) {
   $.get('http://localhost:8080/district/box-whisker/' + current_state + '/' + selected_plan, function (data) {
     var seawulf_plots = data.boxAndWhiskerData[demographic];
     var district_plots = data.districtData[demographic];
+    console.log(data);
 
     var final = [];
     const reducer = (accumulator, curr) => accumulator + curr;
     district_plots.forEach(element => {
       const sum = district_plots.reduce(reducer);
-      final.push((element / sum) * 100);
+      final.push((element / sum));
     });
-
     var data = [];
     for (var i = 0; i < seawulf_plots.length; i++) {
       var result = {
         type: 'box',
         y: Object.values(seawulf_plots[i]),
-        name: "SeaWulf Plan " + i,
+        name: "ID " + i,
         boxpoints: 'all',
         jitter: 0.5,
         whiskerwidth: 0.2,
@@ -213,28 +219,25 @@ function queryBoxWhisker(demographic, name) {
       };
       data.push(result);
     }
-    data.push({
-      type: 'box',
-      y: final,
-      name: available_plans[selected_plan][1],
-      boxpoints: 'all',
-      jitter: 0.5,
-      whiskerwidth: 0.2,
-      fillcolor: 'cls',
-      marker: {
-        size: 2
-      },
-      line: {
-        width: 1
-      }
-    });
+    for (var i = 0; i < seawulf_plots.length; i++) {
+      data.push({
+        x: ["ID " + i],
+        y: [final[i]],
+        name: available_plans[selected_plan][1],
+        marker: {
+          size: 10
+        }
+      })
+
+    }
 
     layout = {
       plot_bgcolor: "#EEEEEE",
       paper_bgcolor: "#EEEEEE",
       width: 800,
       height: 400,
-      title: name + ' Population Data for ' + available_plans[selected_plan][1] + ' vs. Selected SeaWulf Plans',
+      title: name + ' Box and Whisker Data vs. Approved',
+      showlegend: false,
       yaxis: {
         autorange: true,
         showgrid: true,
@@ -473,7 +476,7 @@ function querySeaWulfStats(metric, demographic = null) {
               }
             }
           ];
-  
+
           var layout = {
             width: 600,
             height: 400,
@@ -484,7 +487,7 @@ function querySeaWulfStats(metric, demographic = null) {
             },
             bargap: 0.0
           };
-  
+
           Plotly.newPlot('seawulf-chart', chart, layout);
         }
         break;

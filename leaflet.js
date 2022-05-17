@@ -55,7 +55,7 @@ info.update = function (props) {
         if(props.lean <= 0) {
             new_lean = "D+" + Math.ceil(props.lean * -1)
         }
-        this._div.innerHTML += ("<b>Political Lean:</b> " + new_lean + "<br /><nobr><b>Population:</b> " + props.pop);
+        this._div.innerHTML += ("<b>Political Lean:</b> " + new_lean + "<br /><nobr><b>Population:</b> " + props.pop + "<br /><nobr><b>African American Population:</b> " + props.af + "<br /><nobr><b>American Indian Population:</b> " + props.nat + "<br /><nobr><b>Hispanic Latino Population:</b> " + props.his);
     }
     else {
         this._div.innerHTML += "<nobr> Hover over a district"
