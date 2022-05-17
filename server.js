@@ -342,8 +342,18 @@ function querySeaWulfStats(metric) {
             type: 'bar'
           }
         ];
+
+        var layout = {
+          width: 600,
+          height: 400,
+          title: 'SeaWulf R-D Split',
+          showlegend: false,
+          xaxis: {
+            title: 'Republican-Democrat Seats'
+          },
+        };
         
-        Plotly.newPlot('seawulf-chart', chart);
+        Plotly.newPlot('seawulf-chart', chart, layout);
         break;
     
       default:
