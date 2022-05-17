@@ -115,6 +115,16 @@ function loadStates() {
     }
 }
 
+function displayLoading(loader) {
+    loader.classList.add("display");
+    loader.style.display = 'block';
+}
+
+function hideLoading(loader) {
+    loader.classList.remove("display");
+    loader.style.display = 'none';
+}
+
 // This highlights the layer on hover, also for mobile
 function highlightDistrict(e) {
     resetHighlightDistrict(e);
@@ -169,7 +179,6 @@ function zoomToFeature(e, state = null) {
 }
 
 function loadPlan(id) {
-    console.log(id);
     if (selected_plan != id) {
         queryPlan(id);
     }
