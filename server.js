@@ -47,6 +47,7 @@ function getState(state_code) {
 function queryPlan(id) {
   selected_plan = id;
   $.get('http://localhost:8080/district/population-metrics/' + current_state + '/' + available_plans[id][0], function (data) {
+    console.log(data);
     plan_stats = data;
   });
   $.get('http://localhost:8080/district/geojson/' + current_state + '/' + available_plans[id][0], function (data) {
@@ -56,8 +57,7 @@ function queryPlan(id) {
       total = democrat + republican;
       lean = 100 * ((republican / total) - (democrat / total));
       data.features[i].properties.lean = lean;
-      console.log(plan_stats);
-      console.log(data.features[i]);
+      data.features[i].properties.pop = plan_stats[i]["TOTAL_POPULATION"];
     }
     showDistrict(data);
   });
@@ -237,7 +237,6 @@ function displayPlanOptions() {
 
 function queryComparePlans(id) {
   $.get('http://localhost:8080/district/compare/' + current_state + '/' + selected_plan + "/" + id, function (data) {
-    console.log(data);
     var plan1 = [data.compactness1, data.efficiencyGap1, data.meanPopulationDeviation1, data.numCombinedMajorityMinorityDistricts1, data.numIncumbentSafeDistricts1];
     var plan2 = [data.compactness2, data.efficiencyGap2, data.meanPopulationDeviation2, data.numCombinedMajorityMinorityDistricts2, data.numIncumbentSafeDistricts2];
     var axes = ["Compactness", "Eff. Gap", "Mean Pop. Dev.", "Combined Maj-Min Districts", "Incumbent Safe Districts"];
@@ -276,7 +275,6 @@ function queryComparePlans(id) {
 
 function queryStateShapes() {
   $.get('http://localhost:8080/state/geojson/all', function (data) {
-    console.log(data);
     state_shapes = data;
     loadStates();
   });

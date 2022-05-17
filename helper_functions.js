@@ -119,7 +119,7 @@ function loadStates() {
         state_layers.push(
             L.geoJSON(value, {
                 style: {
-                    fillColor: '#800026',
+                    fillColor: '#83466b',
                     weight: 2,
                     opacity: 1,
                     color: 'white',
@@ -216,7 +216,7 @@ function makeInvis(layer) {
 
 function makeVis(layer) {
     layer.setStyle({
-        fillColor: '#800026',
+        fillColor: '#83466b',
         weight: 2,
         opacity: 1,
         color: 'white',
@@ -227,7 +227,7 @@ function makeVis(layer) {
 
 function style(feature) {
     return {
-        fillColor: '#800026',
+        fillColor: '#83466b',
         weight: 2,
         opacity: 1,
         color: 'white',

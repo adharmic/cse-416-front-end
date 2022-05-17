@@ -51,7 +51,11 @@ info.update = function (props) {
     this._div.innerHTML = '<h6><nobr>District Information:</h6>';
 
     if(props) {
-        this._div.innerHTML += ("<b>District No.:</b> " + props.DISTRICTNO + "<br /><nobr><b>Congressional District Number:</b> " + props.CD);
+        new_lean = "R+" + Math.ceil(props.lean);
+        if(props.lean <= 0) {
+            new_lean = "D+" + Math.ceil(props.lean * -1)
+        }
+        this._div.innerHTML += ("<b>Political Lean:</b> " + new_lean + "<br /><nobr><b>Population:</b> " + props.pop);
     }
     else {
         this._div.innerHTML += "<nobr> Hover over a district"
