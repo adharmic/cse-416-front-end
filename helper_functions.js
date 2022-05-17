@@ -200,6 +200,9 @@ function zoomToFeature(e, state = null) {
 function loadPlan(id) {
     if (selected_plan != id) {
         queryPlan(id);
+        queryBoxWhisker('AFRICAN_AMERICAN', 'African American');
+        querySeatShare();
+        Plotly.purge('compare-chart');
     }
 }
 
@@ -259,7 +262,7 @@ function displayCompareOptions() {
             new_plan_option.onclick = function () { queryComparePlans(i); };
             new_plan_option.classList.add("dropdown-item");
             new_plan_option.href = "#";
-            new_plan_option.innerHTML = available_plans[i];
+            new_plan_option.innerHTML = available_plans[i][1];
             drop.appendChild(new_plan_option);
         }
     }

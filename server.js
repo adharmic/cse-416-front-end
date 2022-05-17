@@ -11,6 +11,10 @@ var state_shapes = [];
 
 const plan_base = document.getElementById("default-plan").cloneNode(true);
 
+function upper(sentence) {
+  return sentence.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+}
+
 function getState(state_code) {
   current_state = "";
   available_plans = [];
@@ -18,6 +22,7 @@ function getState(state_code) {
   $.get("http://localhost:8080/state/" + state_code, function (data) {
     $(".result").html(data);
     $(function () {
+      console.log(data);
       current_state = state_code;
       if (state_code === "nv") {
         plan_offset = 0;
@@ -31,8 +36,10 @@ function getState(state_code) {
 
       // Populates summary table with state data
       data.districtPlanMetricsList.forEach(element => {
-        available_plans.push(element.name);
+        element.name = upper(element.name.replaceAll("_", " "));
+        available_plans.push([element.id, element.name]);
       });
+      available_plans.sort((a,b) => (a[1] > b[1]) ? 1 : ((b[1] > a[1]) ? -1 : 0));
       displayPlanOptions();
       // for (const [key, value] of Object.entries(data.districtPlanIdToMetricsMap)) {
       //   value.meanPopulationDeviation = parseFloat(value.meanPopulationDeviation).toFixed(4);
@@ -48,9 +55,7 @@ function getState(state_code) {
 
 function queryPlan(id) {
   selected_plan = id;
-  offset = selected_plan + plan_offset;
-
-  $.get('http://localhost:8080/district/geojson/' + current_state + '/' + offset, function (data) {
+  $.get('http://localhost:8080/district/geojson/' + current_state + '/' + available_plans[id][0], function (data) {
     $.get('http://localhost:8080/')
     showDistrict(data);
   });
@@ -61,7 +66,7 @@ function querySeatShare() {
   var loader = document.getElementById('load-sv');
   // displayLoading(loader);
 
-  $.get('http://localhost:8080/district/seat-share/' + current_state + '/' + offset, function (data) {
+  $.get('http://localhost:8080/district/seat-share/' + current_state + '/' + available_plans[selected_plan][0], function (data) {
     // hideLoading(loader);
 
     var x_coordinates_dem = [];
@@ -129,7 +134,7 @@ function querySeatShare() {
     document.getElementById('sv-responsiveness').innerHTML = "Responsiveness: " + data.responsiveness;
     document.getElementById('sv-baf').innerHTML = "Bias at 50%: " + data.biasAt50;
     document.getElementById('sv-symmetry').innerHTML = "Symmetry: " + data.symmetry;
-    document.getElementById('sv-header').innerHTML = "Seats-Votes Curve for " + available_plans[selected_plan];
+    document.getElementById('sv-header').innerHTML = "Seats-Votes Curve for " + available_plans[selected_plan][1];
   });
 }
 
@@ -169,7 +174,7 @@ function queryBoxWhisker(demographic, name) {
     data.push({
       type: 'box',
       y: final,
-      name: available_plans[selected_plan],
+      name: available_plans[selected_plan][1],
       boxpoints: 'all',
       jitter: 0.5,
       whiskerwidth: 0.2,
@@ -187,7 +192,7 @@ function queryBoxWhisker(demographic, name) {
       paper_bgcolor: "#EEEEEE",
       width: 800,
       height: 400,
-      title: name + ' Population Data for ' + available_plans[selected_plan] + ' vs. Selected SeaWulf Plans',
+      title: name + ' Population Data for ' + available_plans[selected_plan][1] + ' vs. Selected SeaWulf Plans',
       yaxis: {
         autorange: true,
         showgrid: true,
@@ -216,13 +221,13 @@ function displayPlanOptions() {
   plan_list = document.getElementById("picker");
   first_plan = document.getElementById("default-plan");
 
-  first_plan.firstChild.nextSibling.innerHTML = plan_names[0];
+  first_plan.firstChild.nextSibling.innerHTML = plan_names[0][1];
 
   for (let index = 1; index < 4; index++) {
     new_plan = first_plan.cloneNode(true);
     new_plan.id = "";
     new_plan.onclick = function () { loadPlan(index) };
-    new_plan.firstChild.nextSibling.innerHTML = plan_names[index];
+    new_plan.firstChild.nextSibling.innerHTML = plan_names[index][1];
     plan_list.appendChild(new_plan);
   }
   document.getElementById("default-plan").click();
@@ -241,18 +246,18 @@ function queryComparePlans(id) {
         r: plan1,
         theta: axes,
         fill: 'toself',
-        name: available_plans[selected_plan]
+        name: available_plans[selected_plan][1]
       },
       {
         type: "scatterpolar",
         r: plan2,
         theta: axes,
         fill: 'toself',
-        name: available_plans[id]
+        name: available_plans[id][1]
       }
     ]
     layout = {
-      title: 'Comparison of ' + available_plans[selected_plan] + " vs. " + available_plans[id],
+      title: 'Comparison of ' + available_plans[selected_plan][1] + " vs. " + available_plans[id][1],
       width: 600,
       height: 400,
       polar: {
