@@ -6,12 +6,6 @@ selector[0].style.display = "none";
 var picker = document.getElementById("plans-picker")
 picker.style.display = "none";
 
-const DISTRICTING_STATES = new TwoWayMap({"32":"NV", "22":"LA", "17":"IL"});
-
-const states = state_data.features.filter(function (entry) {
-    return DISTRICTING_STATES.keys().includes(entry.properties.STATE);
-});
-
 var map = L.map('map', {
     minZoom: 4,
     maxZoom: 10,
@@ -32,11 +26,7 @@ var state_layers = [];
 
 var district_layers = [];
 
-loadStates();
-
-state_layers.forEach(element => {
-    element.on('mouseover', highlightFeature).on('mouseout', resetHighlight).on('click', zoomToFeature).addTo(map);
-});
+queryStateShapes();
 
 // L.geoJSON(states).on('mouseover', highlightFeature).addTo(map);
 

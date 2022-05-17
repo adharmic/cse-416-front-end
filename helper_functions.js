@@ -18,7 +18,7 @@ class TwoWayMap {
 }
 
 function removeAllChildren(element) {
-    while(element.firstChild) {
+    while (element.firstChild) {
         element.removeChild(element.firstChild);
     }
 }
@@ -97,11 +97,11 @@ function highlightFeature(e) {
 }
 
 function showDistrict(geojson) {
-    if(district_data) {
+    if (district_data) {
         map.removeLayer(district_data);
     }
     district_data = L.geoJSON(geojson, {
-        style: style,
+        style: districtStyle,
         onEachFeature: onEachStateFeature
     }).addTo(map);
 }
@@ -112,9 +112,11 @@ function resetHighlight(e) {
 }
 
 function loadStates() {
-    for (const [key, value] of Object.entries(DISTRICTING_STATES.map)) {
+    // for (const [key, value] of Object.entries(DISTRICTING_STATES.map)) {
+    // }
+    for (const [key, value] of Object.entries(state_shapes)) {
         state_layers.push(
-            L.geoJSON(states, {
+            L.geoJSON(value, {
                 style: {
                     fillColor: '#800026',
                     weight: 2,
@@ -122,14 +124,14 @@ function loadStates() {
                     color: 'white',
                     dashArray: '3',
                     fillOpacity: 0.5,
-                    className: value
-                },
-                filter: function (feature) {
-                    return (feature.properties.STATE === key);
+                    className: key
                 }
             })
         )
     }
+    state_layers.forEach(element => {
+        element.on('mouseover', highlightFeature).on('mouseout', resetHighlight).on('click', zoomToFeature).addTo(map);
+    });
 }
 
 function displayLoading(loader) {
@@ -226,19 +228,37 @@ function style(feature) {
         opacity: 1,
         color: 'white',
         dashArray: '3',
-        fillOpacity: 0.5,
-        className: feature.properties.GEO_ID
+        fillOpacity: 0.5
     };
+}
+
+function districtStyle(feature) {
+    return {
+        fillColor: '#800026',
+        weight: 2,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.5
+    };
+}
+
+function getColor(d) {
+    return d < -15 ? '#5767ac' :
+        d < -5 ? '#a0a9ed' :
+            d > 5 ? '#ff9989' :
+                d > 15 ? '#fa5a50' :
+                    '#eae2ea';
 }
 
 function displayCompareOptions() {
     var drop = document.getElementById("compare-options");
     for (let i = 0; i < available_plans.length; i++) {
-        if(i !== selected_plan) {
+        if (i !== selected_plan) {
             var new_plan_option = document.createElement("a");
-            new_plan_option.onclick = function () {queryComparePlans(i);};
+            new_plan_option.onclick = function () { queryComparePlans(i); };
             new_plan_option.classList.add("dropdown-item");
-            new_plan_option.href="#";
+            new_plan_option.href = "#";
             new_plan_option.innerHTML = available_plans[i];
             drop.appendChild(new_plan_option);
         }

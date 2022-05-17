@@ -5,6 +5,9 @@ var district_data;
 var current_state;
 var available_plans;
 var selected_plan;
+var plan_offset;
+var offset;
+var state_shapes = [];
 
 const plan_base = document.getElementById("default-plan").cloneNode(true);
 
@@ -16,6 +19,15 @@ function getState(state_code) {
     $(".result").html(data);
     $(function () {
       current_state = state_code;
+      if (state_code === "nv") {
+        plan_offset = 0;
+      }
+      if (state_code === "il") {
+        console.log(data);
+      }
+      if (state_code === "pa") {
+        plan_offset = 8;
+      }
 
       // Populates summary table with state data
       data.districtPlanMetricsList.forEach(element => {
@@ -36,8 +48,10 @@ function getState(state_code) {
 
 function queryPlan(id) {
   selected_plan = id;
+  offset = selected_plan + plan_offset;
 
-  $.get('http://localhost:8080/district/geojson/' + current_state + '/' + selected_plan, function (data) {
+  $.get('http://localhost:8080/district/geojson/' + current_state + '/' + offset, function (data) {
+    $.get('http://localhost:8080/')
     showDistrict(data);
   });
 }
@@ -47,7 +61,7 @@ function querySeatShare() {
   var loader = document.getElementById('load-sv');
   // displayLoading(loader);
 
-  $.get('http://localhost:8080/district/seat-share/' + current_state + '/' + selected_plan, function (data) {
+  $.get('http://localhost:8080/district/seat-share/' + current_state + '/' + offset, function (data) {
     // hideLoading(loader);
 
     var x_coordinates_dem = [];
@@ -250,5 +264,13 @@ function queryComparePlans(id) {
     }
     Plotly.newPlot("compare-chart", data, layout);
 
+  });
+}
+
+function queryStateShapes() {
+  $.get('http://localhost:8080/state/geojson/all', function (data) {
+    console.log(data['pa']);
+    state_shapes = data;
+    loadStates();
   });
 }
