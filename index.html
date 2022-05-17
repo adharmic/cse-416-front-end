@@ -87,16 +87,31 @@
                 Select Metric
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a onclick="querySeaWulfStats('combinedMajorityMinorityMap');" class="dropdown-item"
-                    href="#">Combined Majority-Minority Map</a>
+                <a onclick="querySeaWulfStats('combinedMajorityMinorityMap');" class="dropdown-item" href="#">Combined
+                    Majority-Minority Map</a>
                 <a onclick="querySeaWulfStats('majorityMinorityRange');" class="dropdown-item"
                     href="#">Majority-Minority Range</a>
-                <a onclick="querySeaWulfStats('compactnessData');" class="dropdown-item"
-                    href="#">Compactness</a>
-                <a onclick="querySeaWulfStats('efficiencyGapData');" class="dropdown-item"
-                    href="#">Efficiency Gap</a>
-                <a onclick="querySeaWulfStats('republicanDemocratSplit');" class="dropdown-item"
-                    href="#">Republican Democrat Split</a>
+                <a onclick="querySeaWulfStats('compactnessData');" class="dropdown-item" href="#">Compactness</a>
+                <a onclick="querySeaWulfStats('efficiencyGapData');" class="dropdown-item" href="#">Efficiency Gap</a>
+                <a onclick="querySeaWulfStats('republicanDemocratSplit');" class="dropdown-item" href="#">Republican
+                    Democrat Split</a>
+            </div>
+        </div>
+        <div id="demo-seawulf" class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Demographic
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a onclick="querySeaWulfStats('majorityMinorityRange', 'AFRICAN_AMERICAN')" class="dropdown-item"
+                    href="#">African American</a>
+                <a onclick="querySeaWulfStats('majorityMinorityRange', 'AMERICAN_INDIAN')" class="dropdown-item"
+                    href="#">American Indian</a>
+                <a onclick="querySeaWulfStats('majorityMinorityRange', 'ASIAN')" href="#">Asian</a>
+                <a onclick="querySeaWulfStats('majorityMinorityRange', 'HISPANIC_LATINO')" class="dropdown-item"
+                    href="#">Hispanic Latino</a>
+                <a onclick="querySeaWulfStats('majorityMinorityRange', 'PACIFIC_ISLANDER')" class="dropdown-item"
+                    href="#">Pacific Islander</a>
             </div>
         </div>
         <div id="seawulf-chart">
@@ -191,8 +206,8 @@
                 id="showBox" class="btn btn-primary" aria-pressed="false" autocomplete="off">
                 Show Seats-Votes
             </button>
-            <button onclick="togglePopup(document.getElementById('compare'));  displayCompareOptions();" type="button" id="showBox"
-                class="btn btn-primary" aria-pressed="false" autocomplete="off">
+            <button onclick="togglePopup(document.getElementById('compare'));  displayCompareOptions();" type="button"
+                id="showBox" class="btn btn-primary" aria-pressed="false" autocomplete="off">
                 Compare Plans
             </button>
             <button onclick="togglePopup(document.getElementById('seawulf'));" type="button" id="showBox"

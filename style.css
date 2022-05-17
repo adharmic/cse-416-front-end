@@ -5,6 +5,10 @@
   --light: #EEEEEE;
 }
 
+#demo-seawulf {
+  display: none;
+}
+
 .popup-close {
   float: right;
   cursor: pointer;

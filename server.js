@@ -324,11 +324,12 @@ function queryStateShapes() {
   });
 }
 
-function querySeaWulfStats(metric) {
+function querySeaWulfStats(metric, demographic = null) {
   $.get('http://localhost:8080/state/seawulf/' + current_state, function (data) {
-    console.log(data[metric]);
+    demodrop = document.getElementById("demo-seawulf");
     switch (metric) {
       case "republicanDemocratSplit":
+        demodrop.style.display = "none";
         xaxis = [];
         yaxis = [];
         data[metric].forEach(element => {
@@ -339,7 +340,10 @@ function querySeaWulfStats(metric) {
           {
             x: xaxis,
             y: yaxis,
-            type: 'bar'
+            type: 'bar',
+            marker: {
+              color: '#007bff'
+            }
           }
         ];
 
@@ -352,11 +356,137 @@ function querySeaWulfStats(metric) {
             title: 'Republican-Democrat Seats'
           },
         };
-        
+
         Plotly.newPlot('seawulf-chart', chart, layout);
         break;
-    
+      case "combinedMajorityMinorityMap":
+        demodrop.style.display = "none";
+        xaxis = [];
+        yaxis = [];
+        data[metric].forEach(element => {
+          xaxis.push(element.numCombinedMajorityMinorityDistricts);
+          yaxis.push(element.count);
+        });
+        var chart = [
+          {
+            x: xaxis,
+            y: yaxis,
+            type: 'histogram',
+            marker: {
+              color: '#007bff'
+            }
+          }
+        ];
+
+        var layout = {
+          width: 600,
+          height: 400,
+          title: 'SeaWulf Combined Majority-Minority Statistics',
+          showlegend: false,
+        };
+
+        Plotly.newPlot('seawulf-chart', chart, layout);
+        break;
+      case "compactnessData":
+        demodrop.style.display = "none";
+        xaxis = [];
+        yaxis = [];
+        data[metric].forEach(element => {
+          xaxis.push(element.rangeMinimum + "-" + element.rangeMaximum);
+          yaxis.push(element.count);
+        });
+        var chart = [
+          {
+            x: xaxis,
+            y: yaxis,
+            type: 'bar',
+            marker: {
+              color: '#007bff'
+            }
+          }
+        ];
+
+        var layout = {
+          width: 600,
+          height: 400,
+          title: 'SeaWulf Compactness Stats',
+          showlegend: false,
+          xaxis: {
+            title: ''
+          },
+          bargap: 0.0
+        };
+
+        Plotly.newPlot('seawulf-chart', chart, layout);
+        break;
+      case "efficiencyGapData":
+        demodrop.style.display = "none";
+        xaxis = [];
+        yaxis = [];
+        data[metric].forEach(element => {
+          xaxis.push(element.rangeMinimum + "-" + element.rangeMaximum);
+          yaxis.push(element.count);
+        });
+        var chart = [
+          {
+            x: xaxis,
+            y: yaxis,
+            type: 'bar',
+            marker: {
+              color: '#007bff'
+            }
+          }
+        ];
+
+        var layout = {
+          width: 600,
+          height: 400,
+          title: 'SeaWulf Efficiency Gap Stats',
+          showlegend: false,
+          xaxis: {
+            title: ''
+          },
+          bargap: 0.0
+        };
+
+        Plotly.newPlot('seawulf-chart', chart, layout);
+        break;
       default:
+        var demodrop = document.getElementById("demo-seawulf");
+        demodrop.style.display = "inline";
+        if (demographic) {
+          xaxis = [];
+          yaxis = [];
+
+          for (const [key, value] of Object.entries(data[metric][demographic])) {
+
+            xaxis.push(key);
+            yaxis.push(value);
+          }
+          var chart = [
+            {
+              x: xaxis,
+              y: yaxis,
+              type: 'bar',
+              marker: {
+                color: '#007bff'
+              }
+            }
+          ];
+  
+          var layout = {
+            width: 600,
+            height: 400,
+            title: 'SeaWulf Majority-Minority Range Stats',
+            showlegend: false,
+            xaxis: {
+              title: ''
+            },
+            bargap: 0.0
+          };
+  
+          Plotly.newPlot('seawulf-chart', chart, layout);
+        }
         break;
     }
   });
