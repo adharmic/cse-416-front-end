@@ -294,7 +294,7 @@ body,
   bottom: 0%;
   min-width: 300px;
   min-height: 300px;
-  max-height: fit-content;
+  max-height: 600px;
   max-width: fit-content;
   width: auto;
   height: auto;
