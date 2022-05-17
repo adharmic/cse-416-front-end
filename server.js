@@ -73,7 +73,8 @@ function querySeatShare() {
 
     var x_coordinates_dem = [];
     var y_coordinates_dem = [];
-    for (const [key, value] of Object.entries(data.democratData)) {
+    console.log(data);
+    for (const [key, value] of Object.entries(data.districtPlan.democratData)) {
       x_coordinates_dem.push(value.x);
       y_coordinates_dem.push(value.y);
     }
@@ -81,9 +82,23 @@ function querySeatShare() {
 
     var x_coordinates_rep = [];
     var y_coordinates_rep = [];
-    for (const [key, value] of Object.entries(data.republicanData)) {
+    for (const [key, value] of Object.entries(data.districtPlan.republicanData)) {
       x_coordinates_rep.push(value.x);
       y_coordinates_rep.push(value.y);
+    }
+
+    var x_seawulf_dem = [];
+    var y_seawulf_dem = [];
+    for (const [key, value] of Object.entries(data.seawulfData.democratData)) {
+      x_seawulf_dem.push(value.x);
+      y_seawulf_dem.push(value.y);
+    }
+
+    var x_seawulf_rep = [];
+    var y_seawulf_rep = [];
+    for (const [key, value] of Object.entries(data.seawulfData.republicanData)) {
+      x_seawulf_rep.push(value.x);
+      y_seawulf_rep.push(value.y);
     }
 
     var trace_dem = {
@@ -108,10 +123,35 @@ function querySeatShare() {
       }
     };
 
+    var seawulf_dem = {
+      x: x_seawulf_dem,
+      y: y_seawulf_dem,
+      mode: 'markers',
+      name: 'SeaWulf Democratic',
+      marker: {
+        color: 'rgb(55, 128, 191)',
+        size: 2,
+        opacity: .8
+      }
+    };
+
+    var seawulf_rep = {
+      x: x_seawulf_rep,
+      y: y_seawulf_rep,
+      mode: 'markers',
+      name: 'SeaWulf Republican',
+      marker: {
+        color: 'rgb(219, 64, 82)',
+        size: 2,
+        opacity: .8
+      }
+    };
+
     var layout = {
       width: 600,
       height: 400,
       xaxis: {
+        range: [.2,.8],
         title: {
           text: 'Percentage of Vote',
           font: {
@@ -129,13 +169,13 @@ function querySeatShare() {
       }
     };
 
-    var plotly_data = [trace_dem, trace_rep];
+    var plotly_data = [trace_dem, trace_rep, seawulf_dem, seawulf_rep];
 
     Plotly.newPlot('sv-chart', plotly_data, layout);
 
-    document.getElementById('sv-responsiveness').innerHTML = "Responsiveness: " + data.responsiveness;
-    document.getElementById('sv-baf').innerHTML = "Bias at 50%: " + data.biasAt50;
-    document.getElementById('sv-symmetry').innerHTML = "Symmetry: " + data.symmetry;
+    document.getElementById('sv-responsiveness').innerHTML = "Responsiveness: " + data.districtPlan.responsiveness;
+    document.getElementById('sv-baf').innerHTML = "Bias at 50%: " + data.districtPlan.biasAt50;
+    document.getElementById('sv-symmetry').innerHTML = "Symmetry: " + data.districtPlan.symmetry;
     document.getElementById('sv-header').innerHTML = "Seats-Votes Curve for " + available_plans[selected_plan][1];
   });
 }
@@ -282,4 +322,8 @@ function queryStateShapes() {
     state_shapes = data;
     loadStates();
   });
+}
+
+function querySeaWulfStats() {
+
 }
