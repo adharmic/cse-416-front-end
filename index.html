@@ -81,7 +81,26 @@
                 onclick="togglePopup(document.getElementById('seawulf'))">&#10006;</span>
         </div>
         <!-- <div id="load-seawulf" class="loading"></div> -->
-        <p>Dummy Data Goes Here</p>
+        <div id="demo-picker" class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Metric
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a onclick="querySeaWulfStats('combinedMajorityMinorityMap');" class="dropdown-item"
+                    href="#">Combined Majority-Minority Map</a>
+                <a onclick="querySeaWulfStats('majorityMinorityRange');" class="dropdown-item"
+                    href="#">Majority-Minority Range</a>
+                <a onclick="querySeaWulfStats('compactnessData');" class="dropdown-item"
+                    href="#">Compactness</a>
+                <a onclick="querySeaWulfStats('efficiencyGapData');" class="dropdown-item"
+                    href="#">Efficiency Gap</a>
+                <a onclick="querySeaWulfStats('republicanDemocratSplit');" class="dropdown-item"
+                    href="#">Republican Democrat Split</a>
+            </div>
+        </div>
+        <div id="seawulf-chart">
+        </div>
     </div>
     <div id="boxplot" class="popup">
         <div class="popup-header">
@@ -124,7 +143,7 @@
             <a class="navbar-brand" href="#">
                 Sparks</a>
             <button type="button" onClick="resetMap()" class="btn btn-primary mr-1">Reload</button>
-            <button type="button" class="btn btn-primary mr-1"><i class="fa fa-camera"></i> Save Screenshot</button>
+            <!-- <button type="button" class="btn btn-primary mr-1"><i class="fa fa-camera"></i> Save Screenshot</button> -->
 
             <div id="boundry-picker" class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -176,7 +195,7 @@
                 class="btn btn-primary" aria-pressed="false" autocomplete="off">
                 Compare Plans
             </button>
-            <button onclick="togglePopup(document.getElementById('seawulf')); querySeaWulfStats();" type="button" id="showBox"
+            <button onclick="togglePopup(document.getElementById('seawulf'));" type="button" id="showBox"
                 class="btn btn-primary" aria-pressed="false" autocomplete="off">
                 Show Seawulf Data
             </button>
@@ -198,7 +217,7 @@
                     <tr>
                         <th data-field="name" scope="col">Plan Name</th>
                         <!-- <th data-field="numMinorityMajorityDistricts" scope="col">Maj-Min Districts</th> -->
-                        <th data-field="meanPopulationDeviation" scope="col">Equality Statistics</th>
+                        <th data-field="meanPopulationDeviation" scope="col">Mean Pop. Dev.</th>
                         <th data-field="compactness" scope="col">Polsby-Popper</th>
                         <!-- <th data-field="timesAccessed" scope="col"></th> -->
                     </tr>

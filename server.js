@@ -151,7 +151,7 @@ function querySeatShare() {
       width: 600,
       height: 400,
       xaxis: {
-        range: [.2,.8],
+        range: [.2, .8],
         title: {
           text: 'Percentage of Vote',
           font: {
@@ -278,11 +278,11 @@ function displayPlanOptions() {
 function queryComparePlans(id) {
   $.get('http://localhost:8080/district/compare/' + current_state + '/' + selected_plan + "/" + id, function (data) {
     factor = 10;
-    while(data.meanPopulationDeviation1 / factor > 1) {
+    while (data.meanPopulationDeviation1 / factor > 1) {
       factor *= 10;
     }
-    var plan1 = [data.compactness1, data.efficiencyGap1, data.meanPopulationDeviation1 / factor, data.numCombinedMajorityMinorityDistricts1/available_plans.length, data.numIncumbentSafeDistricts1/available_plans.length];
-    var plan2 = [data.compactness2, data.efficiencyGap2, data.meanPopulationDeviation2 / factor, data.numCombinedMajorityMinorityDistricts2/available_plans.length, data.numIncumbentSafeDistricts2/available_plans.length];
+    var plan1 = [data.compactness1, data.efficiencyGap1, data.meanPopulationDeviation1 / factor, data.numCombinedMajorityMinorityDistricts1 / available_plans.length, data.numIncumbentSafeDistricts1 / available_plans.length];
+    var plan2 = [data.compactness2, data.efficiencyGap2, data.meanPopulationDeviation2 / factor, data.numCombinedMajorityMinorityDistricts2 / available_plans.length, data.numIncumbentSafeDistricts2 / available_plans.length];
     var axes = ["Compactness", "Eff. Gap", "Mean Pop. Dev.", "Combined Maj-Min Districts", "Incumbent Safe Districts"];
 
     data = [
@@ -324,6 +324,52 @@ function queryStateShapes() {
   });
 }
 
-function querySeaWulfStats() {
+function querySeaWulfStats(metric) {
+  $.get('http://localhost:8080/state/seawulf/' + current_state, function (data) {
+    console.log(data[metric]);
+    switch (metric) {
+      case "republicanDemocratSplit":
+        repxaxis = [];
+        demxaxis = [];
+        repyaxis = [];
+        demyaxis = [];
+        data[metric].forEach(element => {
+          repxaxis.push(element.republicanSeats);
+          demxaxis.push(element.democratSeats);
+          repyaxis.push(element.count);
+          demyaxis.push(element.count);
+        });
+        var trace1 = {
+          x: repxaxis,
+          y: repyaxis,
+          type: 'bar',
+          name: 'Republican Seats',
+          marker: {
+            color: 'rgb(219, 64, 82)'
+          }
+        };
+        var trace2 = {
+          x: demxaxis,
+          y: demyaxis,
+          type: 'bar',
+          name: 'Democrat Seats',
+          marker: {
+            color: 'rgb(55, 128, 191)'
+          }
+        };
 
+        var chart = [trace1, trace2];
+        var layout = {
+          barmode: 'group',
+          width: 600,
+          height: 400,
+        };
+        console.log(chart);
+        Plotly.newPlot('seawulf-chart', chart, layout);
+        break;
+
+      default:
+        break;
+    }
+  });
 }

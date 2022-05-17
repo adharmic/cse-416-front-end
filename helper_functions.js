@@ -257,6 +257,7 @@ function getColor(d) {
 
 function displayCompareOptions() {
     var drop = document.getElementById("compare-options");
+    removeAllChildren(drop);
     for (let i = 0; i < available_plans.length; i++) {
         if (i !== selected_plan) {
             var new_plan_option = document.createElement("a");
