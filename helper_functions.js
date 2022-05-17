@@ -75,7 +75,8 @@ function resetStates() {
 }
 
 function resetHighlightDistrict(e) {
-    district_data.setStyle(style);
+    district_data.resetStyle(e.target);
+    // district_data.setStyle(style);
     info.update();
 }
 
@@ -237,12 +238,12 @@ function style(feature) {
 
 function districtStyle(feature) {
     return {
-        fillColor: '#800026',
+        fillColor: getColor(feature.properties.lean),
         weight: 2,
         opacity: 1,
         color: 'white',
         dashArray: '3',
-        fillOpacity: 0.5
+        fillOpacity: .75
     };
 }
 

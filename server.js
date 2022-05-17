@@ -8,6 +8,7 @@ var selected_plan;
 var plan_offset;
 var offset;
 var state_shapes = [];
+var plan_stats;
 
 const plan_base = document.getElementById("default-plan").cloneNode(true);
 
@@ -22,24 +23,14 @@ function getState(state_code) {
   $.get("http://localhost:8080/state/" + state_code, function (data) {
     $(".result").html(data);
     $(function () {
-      console.log(data);
       current_state = state_code;
-      if (state_code === "nv") {
-        plan_offset = 0;
-      }
-      if (state_code === "il") {
-        console.log(data);
-      }
-      if (state_code === "pa") {
-        plan_offset = 8;
-      }
 
       // Populates summary table with state data
       data.districtPlanMetricsList.forEach(element => {
         element.name = upper(element.name.replaceAll("_", " "));
         available_plans.push([element.id, element.name]);
       });
-      available_plans.sort((a,b) => (a[1] > b[1]) ? 1 : ((b[1] > a[1]) ? -1 : 0));
+      available_plans.sort((a, b) => (a[1] > b[1]) ? 1 : ((b[1] > a[1]) ? -1 : 0));
       displayPlanOptions();
       // for (const [key, value] of Object.entries(data.districtPlanIdToMetricsMap)) {
       //   value.meanPopulationDeviation = parseFloat(value.meanPopulationDeviation).toFixed(4);
@@ -55,8 +46,19 @@ function getState(state_code) {
 
 function queryPlan(id) {
   selected_plan = id;
+  $.get('http://localhost:8080/district/population-metrics/' + current_state + '/' + available_plans[id][0], function (data) {
+    plan_stats = data;
+  });
   $.get('http://localhost:8080/district/geojson/' + current_state + '/' + available_plans[id][0], function (data) {
-    $.get('http://localhost:8080/')
+    for (let i = 0; i < data.features.length; i++) {
+      democrat = plan_stats[i]["DEMOCRAT"];
+      republican = plan_stats[i]["REPUBLICAN"];
+      total = democrat + republican;
+      lean = 100 * ((republican / total) - (democrat / total));
+      data.features[i].properties.lean = lean;
+      console.log(plan_stats);
+      console.log(data.features[i]);
+    }
     showDistrict(data);
   });
 }
