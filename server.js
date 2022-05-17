@@ -274,7 +274,7 @@ function queryComparePlans(id) {
 
 function queryStateShapes() {
   $.get('http://localhost:8080/state/geojson/all', function (data) {
-    console.log(data['pa']);
+    console.log(data);
     state_shapes = data;
     loadStates();
   });
