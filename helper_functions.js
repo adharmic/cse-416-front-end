@@ -17,6 +17,12 @@ class TwoWayMap {
     values() { return Object.keys(this.reverseMap); }
 }
 
+function removeAllChildren(element) {
+    while(element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+}
+
 // Removes all map data and resets to a basic state view
 function resetMap() {
     $(function () {
@@ -26,10 +32,16 @@ function resetMap() {
     selector[0].style.display = "none";
     var picker = document.getElementById("plans-picker");
     var radio_list = document.getElementById("picker");
-    while (radio_list.firstChild) {
-        radio_list.removeChild(radio_list.firstChild);
-    }
+    removeAllChildren(radio_list);
     radio_list.appendChild(plan_base);
+
+    var compare_list = document.getElementById("compare-options");
+    removeAllChildren(compare_list);
+
+    // REMOVE PLOTS
+    Plotly.purge('sv-chart');
+    Plotly.purge('compare-chart');
+    Plotly.purge('boxplot-chart');
     picker.style.display = "none";
     document.getElementById("seat-vote").style.display = "none";
     document.getElementById("seawulf").style.display = "none";
@@ -217,4 +229,18 @@ function style(feature) {
         fillOpacity: 0.5,
         className: feature.properties.GEO_ID
     };
+}
+
+function displayCompareOptions() {
+    var drop = document.getElementById("compare-options");
+    for (let i = 0; i < available_plans.length; i++) {
+        if(i !== selected_plan) {
+            var new_plan_option = document.createElement("a");
+            new_plan_option.onclick = function () {queryComparePlans(i);};
+            new_plan_option.classList.add("dropdown-item");
+            new_plan_option.href="#";
+            new_plan_option.innerHTML = available_plans[i];
+            drop.appendChild(new_plan_option);
+        }
+    }
 }

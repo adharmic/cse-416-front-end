@@ -60,10 +60,19 @@
         <div class="popup-header">
             <span id="sv-header"><b>Plan Comparison</b></span>
             <span id="sv-close" class="popup-close"
-                onclick="togglePopup(document.getElementById('compare'))">&#10006;</span>
+                onclick="togglePopup(document.getElementById('compare'));">&#10006;</span>
         </div>
-        <!-- <div id="load-compare" class="loading"></div> -->
-        <p>Dummy Data Goes Here</p>
+
+        <div id="compare-picker" class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Plan to Compare:
+            </button>
+            <div id="compare-options" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            </div>
+        </div>
+        <div id="compare-chart">
+        </div>
     </div>
     <div id="seawulf" class="popup">
         <div class="popup-header">
@@ -86,12 +95,16 @@
                 Select Demographic
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a onclick="queryBoxWhisker('AFRICAN_AMERICAN', 'African American')" class="dropdown-item" href="#">African American</a>
-                <a onclick="queryBoxWhisker('AMERICAN_INDIAN', 'American Indian')" class="dropdown-item" href="#">American Indian</a>
+                <a onclick="queryBoxWhisker('AFRICAN_AMERICAN', 'African American')" class="dropdown-item"
+                    href="#">African American</a>
+                <a onclick="queryBoxWhisker('AMERICAN_INDIAN', 'American Indian')" class="dropdown-item"
+                    href="#">American Indian</a>
                 <a onclick="queryBoxWhisker('ASIAN', 'Asian')" class="dropdown-item" href="#">Asian</a>
                 <a onclick="queryBoxWhisker('DEMOCRAT', 'Democrat')" class="dropdown-item" href="#">Democrat</a>
-                <a onclick="queryBoxWhisker('HISPANIC_LATINO', 'Hispanic Latino')" class="dropdown-item" href="#">Hispanic Latino</a>
-                <a onclick="queryBoxWhisker('PACIFIC_ISLANDER', 'Pacific Islander')" class="dropdown-item" href="#">Pacific Islander</a>
+                <a onclick="queryBoxWhisker('HISPANIC_LATINO', 'Hispanic Latino')" class="dropdown-item"
+                    href="#">Hispanic Latino</a>
+                <a onclick="queryBoxWhisker('PACIFIC_ISLANDER', 'Pacific Islander')" class="dropdown-item"
+                    href="#">Pacific Islander</a>
                 <a onclick="queryBoxWhisker('REPUBLICAN', 'Republican')" class="dropdown-item" href="#">Republican</a>
                 <a onclick="queryBoxWhisker('WHITE', 'White')" class="dropdown-item" href="#">White</a>
             </div>
@@ -159,7 +172,7 @@
                 id="showBox" class="btn btn-primary" aria-pressed="false" autocomplete="off">
                 Show Seats-Votes
             </button>
-            <button onclick="togglePopup(document.getElementById('compare'))" type="button" id="showBox"
+            <button onclick="togglePopup(document.getElementById('compare'));  displayCompareOptions();" type="button" id="showBox"
                 class="btn btn-primary" aria-pressed="false" autocomplete="off">
                 Compare Plans
             </button>
@@ -167,7 +180,8 @@
                 class="btn btn-primary" aria-pressed="false" autocomplete="off">
                 Show Seawulf Data
             </button>
-            <button onclick="togglePopup(document.getElementById('boxplot')); queryBoxWhisker('AFRICAN_AMERICAN', 'African American');"
+            <button
+                onclick="togglePopup(document.getElementById('boxplot')); queryBoxWhisker('AFRICAN_AMERICAN', 'African American');"
                 type="button" id="showBox" class="btn btn-primary" aria-pressed="false" autocomplete="off">
                 Toggle Box/Whisker
             </button>
@@ -208,5 +222,4 @@
     crossorigin=""></script>
 <script src="helper_functions.js"></script>
 <script src="data_window.js"></script>
-<script src="chart_functions.js"></script>
 <script src="leaflet.js"></script>

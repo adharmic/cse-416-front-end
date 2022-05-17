@@ -292,8 +292,8 @@ body,
   border: 1px solid #d3d3d3;
   text-align: center;
   bottom: 0%;
-  min-width: fit-content;
-  min-height: fit-content;
+  min-width: 300px;
+  min-height: 300px;
   max-height: fit-content;
   max-width: fit-content;
   width: auto;

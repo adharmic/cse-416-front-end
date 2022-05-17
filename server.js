@@ -35,11 +35,9 @@ function getState(state_code) {
 }
 
 function queryPlan(id) {
-  console.log(id);
   selected_plan = id;
 
   $.get('http://localhost:8080/district/geojson/' + current_state + '/' + selected_plan, function (data) {
-    console.log(district_data);
     showDistrict(data);
   });
 }
@@ -117,7 +115,7 @@ function querySeatShare() {
     document.getElementById('sv-responsiveness').innerHTML = "Responsiveness: " + data.responsiveness;
     document.getElementById('sv-baf').innerHTML = "Bias at 50%: " + data.biasAt50;
     document.getElementById('sv-symmetry').innerHTML = "Symmetry: " + data.symmetry;
-    document.getElementById('sv-header').innerHTML = "Seats-Votes Curve for " + available_plans[selected_plan].name;
+    document.getElementById('sv-header').innerHTML = "Seats-Votes Curve for " + available_plans[selected_plan];
   });
 }
 
@@ -214,4 +212,43 @@ function displayPlanOptions() {
     plan_list.appendChild(new_plan);
   }
   document.getElementById("default-plan").click();
+}
+
+function queryComparePlans(id) {
+  $.get('http://localhost:8080/district/compare/' + current_state + '/' + selected_plan + "/" + id, function (data) {
+    console.log(data);
+    var plan1 = [data.compactness1, data.efficiencyGap1, data.meanPopulationDeviation1, data.numCombinedMajorityMinorityDistricts1, data.numIncumbentSafeDistricts1];
+    var plan2 = [data.compactness2, data.efficiencyGap2, data.meanPopulationDeviation2, data.numCombinedMajorityMinorityDistricts2, data.numIncumbentSafeDistricts2];
+    var axes = ["Compactness", "Eff. Gap", "Mean Pop. Dev.", "Combined Maj-Min Districts", "Incumbent Safe Districts"];
+
+    data = [
+      {
+        type: "scatterpolar",
+        r: plan1,
+        theta: axes,
+        fill: 'toself',
+        name: available_plans[selected_plan]
+      },
+      {
+        type: "scatterpolar",
+        r: plan2,
+        theta: axes,
+        fill: 'toself',
+        name: available_plans[id]
+      }
+    ]
+    layout = {
+      title: 'Comparison of ' + available_plans[selected_plan] + " vs. " + available_plans[id],
+      width: 600,
+      height: 400,
+      polar: {
+        radialaxis: {
+          visible: true,
+          range: [0, 50]
+        }
+      }
+    }
+    Plotly.newPlot("compare-chart", data, layout);
+
+  });
 }

@@ -61,7 +61,7 @@ info.update = function (props) {
     this._div.innerHTML = '<h6><nobr>District Information:</h6>';
 
     if(props) {
-        this._div.innerHTML += ("<br /><b>GEO ID:</b> " + props.GEO_ID + "<br /><nobr><b>Congressional District Number:</b> " + props.CD);
+        this._div.innerHTML += ("<b>District No.:</b> " + props.DISTRICTNO + "<br /><nobr><b>Congressional District Number:</b> " + props.CD);
     }
     else {
         this._div.innerHTML += "<nobr> Hover over a district"
