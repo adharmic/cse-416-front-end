@@ -329,45 +329,23 @@ function querySeaWulfStats(metric) {
     console.log(data[metric]);
     switch (metric) {
       case "republicanDemocratSplit":
-        repxaxis = [];
-        demxaxis = [];
-        repyaxis = [];
-        demyaxis = [];
+        xaxis = [];
+        yaxis = [];
         data[metric].forEach(element => {
-          repxaxis.push(element.republicanSeats);
-          demxaxis.push(element.democratSeats);
-          repyaxis.push(element.count);
-          demyaxis.push(element.count);
+          xaxis.push(element.republicanSeats + "-" + element.democratSeats);
+          yaxis.push(element.count);
         });
-        var trace1 = {
-          x: repxaxis,
-          y: repyaxis,
-          type: 'bar',
-          name: 'Republican Seats',
-          marker: {
-            color: 'rgb(219, 64, 82)'
+        var chart = [
+          {
+            x: xaxis,
+            y: yaxis,
+            type: 'bar'
           }
-        };
-        var trace2 = {
-          x: demxaxis,
-          y: demyaxis,
-          type: 'bar',
-          name: 'Democrat Seats',
-          marker: {
-            color: 'rgb(55, 128, 191)'
-          }
-        };
-
-        var chart = [trace1, trace2];
-        var layout = {
-          barmode: 'group',
-          width: 600,
-          height: 400,
-        };
-        console.log(chart);
-        Plotly.newPlot('seawulf-chart', chart, layout);
+        ];
+        
+        Plotly.newPlot('seawulf-chart', chart);
         break;
-
+    
       default:
         break;
     }
