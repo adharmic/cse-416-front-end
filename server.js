@@ -48,10 +48,11 @@ function getState(state_code) {
 function queryPlan(id) {
   selected_plan = id;
   $.get('http://localhost:8080/district/population-metrics/' + current_state + '/' + available_plans[id][0], function (data) {
-    console.log(data);
     plan_stats = data;
   });
   $.get('http://localhost:8080/district/geojson/' + current_state + '/' + available_plans[id][0], function (data) {
+    console.log("PLAN:")
+    console.log(data);
     for (let i = 0; i < data.features.length; i++) {
       democrat = plan_stats[i]["DEMOCRAT"];
       republican = plan_stats[i]["REPUBLICAN"];
@@ -367,6 +368,7 @@ function querySeaWulfStats(metric, demographic = null) {
         xaxis = [];
         yaxis = [];
         data[metric].forEach(element => {
+          console.log(element);
           xaxis.push(element.numCombinedMajorityMinorityDistricts);
           yaxis.push(element.count);
         });
@@ -374,7 +376,7 @@ function querySeaWulfStats(metric, demographic = null) {
           {
             x: xaxis,
             y: yaxis,
-            type: 'histogram',
+            type: 'bar',
             marker: {
               color: '#007bff'
             }
@@ -382,6 +384,7 @@ function querySeaWulfStats(metric, demographic = null) {
         ];
 
         var layout = {
+          bargap: 0.0,
           width: 600,
           height: 400,
           title: 'SeaWulf Combined Majority-Minority Statistics',
