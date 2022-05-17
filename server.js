@@ -6,6 +6,8 @@ var current_state;
 var available_plans;
 var selected_plan;
 
+const plan_base = document.getElementById("default-plan").cloneNode(true);
+
 function getState(state_code) {
   current_state = "";
   available_plans = [];
@@ -33,7 +35,13 @@ function getState(state_code) {
 }
 
 function queryPlan(id) {
+  console.log(id);
   selected_plan = id;
+
+  $.get('http://localhost:8080/district/geojson/' + current_state + '/' + selected_plan, function (data) {
+    console.log(district_data);
+    showDistrict(data);
+  });
 }
 
 function querySeatShare() {
@@ -163,8 +171,8 @@ function queryBoxWhisker(demographic, name) {
     });
 
     layout = {
-      plot_bgcolor:"#EEEEEE",
-      paper_bgcolor:"#EEEEEE",
+      plot_bgcolor: "#EEEEEE",
+      paper_bgcolor: "#EEEEEE",
       width: 800,
       height: 400,
       title: name + ' Population Data for ' + available_plans[selected_plan] + ' vs. Selected SeaWulf Plans',
@@ -194,7 +202,7 @@ function queryBoxWhisker(demographic, name) {
 function displayPlanOptions() {
   var plan_names = available_plans;
   plan_list = document.getElementById("picker");
-  first_plan = document.getElementById("default-plan")
+  first_plan = document.getElementById("default-plan");
 
   first_plan.firstChild.nextSibling.innerHTML = plan_names[0];
 

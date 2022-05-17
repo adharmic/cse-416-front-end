@@ -25,6 +25,11 @@ function resetMap() {
     var selector = document.getElementsByClassName("selector");
     selector[0].style.display = "none";
     var picker = document.getElementById("plans-picker");
+    var radio_list = document.getElementById("picker");
+    while (radio_list.firstChild) {
+        radio_list.removeChild(radio_list.firstChild);
+    }
+    radio_list.appendChild(plan_base);
     picker.style.display = "none";
     document.getElementById("seat-vote").style.display = "none";
     document.getElementById("seawulf").style.display = "none";
@@ -79,13 +84,13 @@ function highlightFeature(e) {
     }
 }
 
-function showDistricts(id) {
-    district_data = L.geoJSON(districts, {
+function showDistrict(geojson) {
+    if(district_data) {
+        map.removeLayer(district_data);
+    }
+    district_data = L.geoJSON(geojson, {
         style: style,
-        onEachFeature: onEachStateFeature,
-        filter: function (feature) {
-            return (feature.properties.STATE === DISTRICTING_STATES.revGet(id));
-        }
+        onEachFeature: onEachStateFeature
     }).addTo(map);
 }
 
@@ -172,7 +177,7 @@ function zoomToFeature(e, state = null) {
     state_layers.forEach(element => {
         makeInvis(element);
     });
-    showDistricts(target.options.style.className);
+    // showDistricts(target.options.style.className);
     var bounds = target.getBounds().pad(.5);
     bounds.extend(L.latLng([bounds.getSouthEast().lat, bounds.getSouthEast().lng + 2.25]));
     map.setMaxBounds(bounds);
