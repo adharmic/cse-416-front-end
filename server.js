@@ -237,8 +237,12 @@ function displayPlanOptions() {
 
 function queryComparePlans(id) {
   $.get('http://localhost:8080/district/compare/' + current_state + '/' + selected_plan + "/" + id, function (data) {
-    var plan1 = [data.compactness1, data.efficiencyGap1, data.meanPopulationDeviation1, data.numCombinedMajorityMinorityDistricts1, data.numIncumbentSafeDistricts1];
-    var plan2 = [data.compactness2, data.efficiencyGap2, data.meanPopulationDeviation2, data.numCombinedMajorityMinorityDistricts2, data.numIncumbentSafeDistricts2];
+    factor = 10;
+    while(data.meanPopulationDeviation1 / factor > 1) {
+      factor *= 10;
+    }
+    var plan1 = [data.compactness1, data.efficiencyGap1, data.meanPopulationDeviation1 / factor, data.numCombinedMajorityMinorityDistricts1/available_plans.length, data.numIncumbentSafeDistricts1/available_plans.length];
+    var plan2 = [data.compactness2, data.efficiencyGap2, data.meanPopulationDeviation2 / factor, data.numCombinedMajorityMinorityDistricts2/available_plans.length, data.numIncumbentSafeDistricts2/available_plans.length];
     var axes = ["Compactness", "Eff. Gap", "Mean Pop. Dev.", "Combined Maj-Min Districts", "Incumbent Safe Districts"];
 
     data = [
@@ -264,7 +268,7 @@ function queryComparePlans(id) {
       polar: {
         radialaxis: {
           visible: true,
-          range: [0, 50]
+          range: [0, 1]
         }
       }
     }
