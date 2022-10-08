@@ -1,5 +1,3 @@
-
-
 var selector = document.getElementsByClassName("selector");
 selector[0].style.display = "none";
 
@@ -55,9 +53,16 @@ info.update = function (props) {
         if(props.lean <= 0) {
             new_lean = "D+" + Math.ceil(props.lean * -1)
         }
-        this._div.innerHTML += ("<b>Political Lean:</b> " + new_lean + "<br /><nobr><b>Population:</b> " + props.pop + "<br /><nobr><b>African American Population:</b> " + props.af + "<br /><nobr><b>American Indian Population:</b> " + props.nat + "<br /><nobr><b>Hispanic Latino Population:</b> " + props.his);
+        this._div.innerHTML += ("<b>Political Lean:</b> " + new_lean + 
+            "<br /><nobr><b>Total Population:</b> " + props.pop + 
+            "<br /><nobr><b>African American Population:</b> " + props.af + 
+            "<br /><nobr><b>American Indian Population:</b> " + props.nat + 
+            "<br /><nobr><b>Hispanic Latino Population:</b> " + props.his +
+            "<br /><nobr><b>Asian Population:</b> " + props.asian + 
+            "<br /><nobr><b>Pacific Islander Population:</b> "+ props.pacific +
+            "<br /><nobr><b>White Population:</b> " + props.white);
     }
     else {
         this._div.innerHTML += "<nobr> Hover over a district"
     }
-};
+}

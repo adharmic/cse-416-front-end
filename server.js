@@ -33,13 +33,17 @@ function getState(state_code) {
       });
       available_plans.sort((a, b) => (a[1] > b[1]) ? 1 : ((b[1] > a[1]) ? -1 : 0));
       displayPlanOptions();
-      // for (const [key, value] of Object.entries(data.districtPlanIdToMetricsMap)) {
-      //   value.meanPopulationDeviation = parseFloat(value.meanPopulationDeviation).toFixed(4);
-      //   value.compactness = parseFloat(value.compactness).toFixed(4);
-      //   plan_summary.push(value);
-      // }
+
+      district_plan_data = []
+      for (const plan_metrics of data.districtPlanMetricsList) {
+        console.log(plan_metrics);
+        plan_metrics.compactness = parseFloat(plan_metrics.compactness).toFixed(2)
+        plan_metrics.meanPopulationDeviation = parseFloat(plan_metrics.meanPopulationDeviation).toFixed(2)
+        district_plan_data.push(plan_metrics)
+      }
+      console.log(district_plan_data)
       $('#table').bootstrapTable({
-        data: data.districtPlanMetricsList
+        data: district_plan_data
       });
     });
   });
@@ -64,6 +68,9 @@ function queryPlan(id) {
       data.features[i].properties.dem = plan_stats[i]["DEMOCRAT"];
       data.features[i].properties.af = plan_stats[i]["AFRICAN_AMERICAN"];
       data.features[i].properties.nat = plan_stats[i]["AMERICAN_INDIAN"];
+      data.features[i].properties.asian = plan_stats[i]["ASIAN"]; 
+      data.features[i].properties.pacific = plan_stats[i]["PACIFIC_ISLANDER"];
+      data.features[i].properties.white = plan_stats[i]["WHITE"];
       data.features[i].properties.his = plan_stats[i]["HISPANIC_LATINO"];
     }
     showDistrict(data);
@@ -190,7 +197,7 @@ function querySeatShare() {
 function queryBoxWhisker(demographic, name) {
   var loader = document.getElementById('load-boxplot');
 
-  $.get('http://localhost:8080/district/box-whisker/' + current_state + '/' + selected_plan, function (data) {
+  $.get('http://localhost:8080/district/box-whisker/' + current_state + '/' + available_plans[selected_plan][0], function (data) {
     var seawulf_plots = data.boxAndWhiskerData[demographic];
     var district_plots = data.districtData[demographic];
     console.log(data);
@@ -280,7 +287,7 @@ function displayPlanOptions() {
 }
 
 function queryComparePlans(id) {
-  $.get('http://localhost:8080/district/compare/' + current_state + '/' + selected_plan + "/" + id, function (data) {
+  $.get('http://localhost:8080/district/compare/' + current_state + '/' + available_plans[selected_plan][0] + "/" + available_plans[id][0], function (data) {
     factor = 10;
     while (data.meanPopulationDeviation1 / factor > 1) {
       factor *= 10;
@@ -340,6 +347,11 @@ function querySeaWulfStats(metric, demographic = null) {
           xaxis.push(element.republicanSeats + "-" + element.democratSeats);
           yaxis.push(element.count);
         });
+        console.log("Xaxis")
+        console.log(xaxis);
+        console.log("Yaxis")
+        console.log(yaxis);
+
         var chart = [
           {
             x: xaxis,
@@ -357,7 +369,8 @@ function querySeaWulfStats(metric, demographic = null) {
           title: 'SeaWulf R-D Split',
           showlegend: false,
           xaxis: {
-            title: 'Republican-Democrat Seats'
+            title: 'Republican-Democrat Seats',
+            type: 'category'
           },
         };
 

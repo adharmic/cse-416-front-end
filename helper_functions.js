@@ -60,6 +60,10 @@ function resetMap() {
     map.removeControl(info);
 }
 
+function removeSeawulfChart(){
+    Plotly.purge('seawulf-chart');
+}
+
 // 
 function reAddStates() {
     state_layers.forEach(element => {
