@@ -11,6 +11,8 @@ var state_shapes = [];
 var plan_stats;
 
 const plan_base = document.getElementById("default-plan").cloneNode(true);
+const address = "https://continual-math-365420.ue.r.appspot.com/";
+//const address = "http://localhost:8080/";
 
 function upper(sentence) {
   return sentence.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
@@ -20,7 +22,7 @@ function getState(state_code) {
   current_state = "";
   available_plans = [];
   selected_plan = null;
-  $.get("http://localhost:8080/state/" + state_code, function (data) {
+  $.get(address + "state/" + state_code, function (data) {
     $(".result").html(data);
     $(function () {
       current_state = state_code;
@@ -51,10 +53,10 @@ function getState(state_code) {
 
 function queryPlan(id) {
   selected_plan = id;
-  $.get('http://localhost:8080/district/population-metrics/' + current_state + '/' + available_plans[id][0], function (data) {
+  $.get(address + 'district/population-metrics/' + current_state + '/' + available_plans[id][0], function (data) {
     plan_stats = data;
   });
-  $.get('http://localhost:8080/district/geojson/' + current_state + '/' + available_plans[id][0], function (data) {
+  $.get(address + 'district/geojson/' + current_state + '/' + available_plans[id][0], function (data) {
     console.log("PLAN:")
     console.log(data);
     for (let i = 0; i < data.features.length; i++) {
@@ -82,7 +84,7 @@ function querySeatShare() {
   var loader = document.getElementById('load-sv');
   // displayLoading(loader);
 
-  $.get('http://localhost:8080/district/seat-share/' + current_state + '/' + available_plans[selected_plan][0], function (data) {
+  $.get(address + 'district/seat-share/' + current_state + '/' + available_plans[selected_plan][0], function (data) {
     // hideLoading(loader);
 
     var x_coordinates_dem = [];
@@ -197,7 +199,7 @@ function querySeatShare() {
 function queryBoxWhisker(demographic, name) {
   var loader = document.getElementById('load-boxplot');
 
-  $.get('http://localhost:8080/district/box-whisker/' + current_state + '/' + available_plans[selected_plan][0], function (data) {
+  $.get(address + 'district/box-whisker/' + current_state + '/' + available_plans[selected_plan][0], function (data) {
     var seawulf_plots = data.boxAndWhiskerData[demographic];
     var district_plots = data.districtData[demographic];
     console.log(data);
@@ -287,7 +289,7 @@ function displayPlanOptions() {
 }
 
 function queryComparePlans(id) {
-  $.get('http://localhost:8080/district/compare/' + current_state + '/' + available_plans[selected_plan][0] + "/" + available_plans[id][0], function (data) {
+  $.get(address + 'district/compare/' + current_state + '/' + available_plans[selected_plan][0] + "/" + available_plans[id][0], function (data) {
     factor = 10;
     while (data.meanPopulationDeviation1 / factor > 1) {
       factor *= 10;
@@ -329,14 +331,14 @@ function queryComparePlans(id) {
 }
 
 function queryStateShapes() {
-  $.get('http://localhost:8080/state/geojson/all', function (data) {
+  $.get(address + 'state/geojson/all', function (data) {
     state_shapes = data;
     loadStates();
   });
 }
 
 function querySeaWulfStats(metric, demographic = null) {
-  $.get('http://localhost:8080/state/seawulf/' + current_state, function (data) {
+  $.get(address + 'state/seawulf/' + current_state, function (data) {
     demodrop = document.getElementById("demo-seawulf");
     switch (metric) {
       case "republicanDemocratSplit":
